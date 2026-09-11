@@ -16,7 +16,6 @@ import { FAQ_ENTRIES } from "../faq";
 import {
   EXTERNAL_LINK_PROPS,
   GITHUB_URL,
-  KOFI_URL,
   RELEASES_LATEST_URL,
 } from "../links";
 import Nav from "../components/Nav";
@@ -301,9 +300,6 @@ function Footer() {
         <div className="flex items-center gap-5">
           <a href={GITHUB_URL} {...EXTERNAL_LINK_PROPS} className="transition hover:text-zinc-300">
             GitHub
-          </a>
-          <a href={KOFI_URL} {...EXTERNAL_LINK_PROPS} className="transition hover:text-zinc-300">
-            Ko-fi
           </a>
           <a
             href="https://opensource.org/licenses/MIT"
