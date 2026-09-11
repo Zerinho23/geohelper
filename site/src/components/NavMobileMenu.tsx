@@ -57,7 +57,7 @@ export default function NavMobileMenu() {
               href={RELEASES_LATEST_URL}
               {...EXTERNAL_LINK_PROPS}
               onClick={close}
-              className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-indigo-500 px-4 py-2.5 font-medium text-white transition hover:bg-indigo-400"
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-blue-500 px-4 py-2.5 font-medium text-white transition hover:bg-blue-400"
             >
               <Download className="size-4" />
               Mi perfil

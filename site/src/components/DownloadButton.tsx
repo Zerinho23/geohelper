@@ -7,7 +7,7 @@ export default function DownloadButton() {
       <a
         href={GITHUB_URL}
         {...EXTERNAL_LINK_PROPS}
-        className="inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/15 transition hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400"
+        className="inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/15 transition hover:bg-blue-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400"
       >
         <Github aria-hidden="true" className="size-5 shrink-0" />
         <span>Mi perfil de GitHub</span>

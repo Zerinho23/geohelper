@@ -55,7 +55,7 @@ function Hero() {
           {...EXTERNAL_LINK_PROPS}
           className="group mx-auto mb-8 inline-flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.02] py-1 pl-1 pr-3 text-[11px] text-zinc-400 transition hover:border-white/[0.12] hover:bg-white/[0.04]"
         >
-          <span className="inline-flex items-center gap-1 rounded-full bg-indigo-500/10 px-2 py-0.5 text-indigo-400">
+          <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/10 px-2 py-0.5 text-blue-400">
             <Download className="size-3" />
             v{GEOHELPER_VERSION}
           </span>
@@ -79,7 +79,7 @@ function Hero() {
 
         <h1 className="text-[2.75rem] font-semibold leading-[1.08] tracking-tight text-zinc-100 sm:text-5xl md:text-6xl">
           Live coordinates for{" "}
-          <span className="text-indigo-400">GeoGuessr</span>.
+          <span className="text-blue-400">GeoGuessr</span>.
         </h1>
 
         <p className="mx-auto mt-6 max-w-lg text-[17px] leading-relaxed text-zinc-400">
@@ -149,7 +149,7 @@ function Features() {
               key={it.title}
               className="bg-zinc-950 p-6 transition hover:bg-white/[0.02]"
             >
-              <div className="mb-3 inline-flex size-8 items-center justify-center rounded-md bg-indigo-500/10 text-indigo-400">
+              <div className="mb-3 inline-flex size-8 items-center justify-center rounded-md bg-blue-500/10 text-blue-400">
                 {it.icon}
               </div>
               <h3 className="text-[15px] font-medium text-zinc-200">{it.title}</h3>
@@ -184,7 +184,7 @@ function Customizer() {
           <ul className="mx-auto mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm">
             {bullets.map((b) => (
               <li key={b.text} className="flex items-center gap-2 text-zinc-400">
-                <span className="text-indigo-400">{b.icon}</span>
+                <span className="text-blue-400">{b.icon}</span>
                 {b.text}
               </li>
             ))}
@@ -214,7 +214,7 @@ function GetStarted() {
             <a
               href={RELEASES_LATEST_URL}
               {...EXTERNAL_LINK_PROPS}
-              className="underline decoration-indigo-500/40 underline-offset-2 hover:text-zinc-100"
+              className="underline decoration-blue-500/40 underline-offset-2 hover:text-zinc-100"
             >
               releases
             </a>{" "}
@@ -228,7 +228,7 @@ function GetStarted() {
           >
             <p>Right-click GeoGuessr in Steam, Properties, Launch Options, paste:</p>
             <div className="mt-3 flex items-start gap-2 rounded-md border border-white/[0.06] bg-black/40 px-3 py-2">
-              <code className="flex-1 break-all font-mono text-[11px] text-indigo-300">{flags}</code>
+              <code className="flex-1 break-all font-mono text-[11px] text-blue-300">{flags}</code>
               <CopyButton text={flags} />
             </div>
           </Step>
@@ -255,7 +255,7 @@ function Step({
 }) {
   return (
     <div className="relative bg-zinc-950 p-6">
-      <div className="mb-4 inline-flex size-8 items-center justify-center rounded-md bg-indigo-500/10 text-indigo-400">
+      <div className="mb-4 inline-flex size-8 items-center justify-center rounded-md bg-blue-500/10 text-blue-400">
         {icon}
       </div>
       <div className="absolute right-4 top-4 font-mono text-[10px] tracking-widest text-zinc-700">

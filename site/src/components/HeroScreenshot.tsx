@@ -20,7 +20,7 @@ export default function HeroScreenshot() {
   return (
     <section className="relative mx-auto max-w-6xl px-6 pb-28">
       <div
-        className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-zinc-950 shadow-2xl shadow-indigo-500/[0.03]"
+        className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-zinc-950 shadow-2xl shadow-blue-500/[0.03]"
         onMouseEnter={() => {
           paused.current = true;
         }}

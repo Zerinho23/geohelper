@@ -8,7 +8,7 @@ export default function NotFoundContent() {
       <div className="grid min-h-dvh place-items-center px-6">
         <section className="w-full max-w-md text-center">
           <img src="/logo.png" alt="" className="mx-auto mb-6 size-12 opacity-60" />
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-indigo-400">
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-blue-400">
             404
           </p>
           <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -20,7 +20,7 @@ export default function NotFoundContent() {
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
               href="/"
-              className="inline-flex items-center gap-2 rounded-lg bg-indigo-500 px-5 py-3 font-semibold text-white transition hover:bg-indigo-400"
+              className="inline-flex items-center gap-2 rounded-lg bg-blue-500 px-5 py-3 font-semibold text-white transition hover:bg-blue-400"
             >
               <ArrowLeft className="size-4" />
               Back home

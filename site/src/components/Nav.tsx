@@ -40,7 +40,7 @@ export default function Nav() {
           <a
             href={RELEASES_LATEST_URL}
             {...EXTERNAL_LINK_PROPS}
-            className="ml-2 inline-flex items-center gap-2 rounded-md bg-indigo-500 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-indigo-400"
+            className="ml-2 inline-flex items-center gap-2 rounded-md bg-blue-500 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-blue-400"
           >
             Mi perfil
           </a>
