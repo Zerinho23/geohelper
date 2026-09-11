@@ -1,143 +1,124 @@
 <div align="center">
-  <img src="docs/logo.png" width="110" alt="GeoHelper" />
+  <img src="site/public/logo.png" width="110" alt="Logo de GeoHelper" />
 
   <h1>GeoHelper</h1>
 
-  <p><strong>A clean, lightweight GeoGuessr companion for Steam</strong></p>
-  <p>Live coordinates · Country · Region · Road · Postcode · Flag · Map preview</p>
+  <p><strong>Un complemento de escritorio para GeoGuessr en Steam.</strong></p>
+  <p>Coordenadas en tiempo real · País · Región · Carretera · Código postal · Bandera · Mapa</p>
 
   <p>
-    <a href="../../stargazers"><img src="https://img.shields.io/github/stars/wiktorekdev/geohelper?style=flat-square&color=6366f1" alt="Stars" /></a>
-    <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/wiktorekdev/geohelper?style=flat-square&color=6366f1" alt="Latest release" /></a>
-    <a href="../../releases"><img src="https://img.shields.io/github/downloads/wiktorekdev/geohelper/total?style=flat-square&color=success" alt="Downloads" /></a>
-    <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-18181b?style=flat-square" alt="Platforms" />
-    <a href="https://ko-fi.com/wiktorekdev"><img src="https://img.shields.io/badge/Ko--fi-Support-FF5E5B?style=flat-square&logo=ko-fi&logoColor=white" alt="Donate" /></a>
-    <a href="LICENSE"><img src="https://img.shields.io/github/license/wiktorekdev/geohelper?style=flat-square" alt="MIT" /></a>
+    <a href="https://github.com/Zerinho23"><img src="https://img.shields.io/badge/GitHub-Zerinho23-2563eb?style=flat-square&logo=github&logoColor=white" alt="Mi perfil de GitHub: Zerinho23" /></a>
+    <img src="https://img.shields.io/badge/Actualizaciones-manuales_por_Discord-2563eb?style=flat-square" alt="Actualizaciones manuales por Discord" />
+    <img src="https://img.shields.io/badge/Plataformas-Windows%20%7C%20Linux%20%7C%20macOS-2563eb?style=flat-square" alt="Windows, Linux y macOS" />
+    <a href="LICENSE"><img src="https://img.shields.io/badge/Licencia-MIT-2563eb?style=flat-square" alt="Licencia MIT" /></a>
   </p>
 </div>
 
 > [!NOTE]
-> **Project status: NPU — No Planned Updates**
+> **Actualizaciones manuales por Discord**
 >
-> GeoHelper remains available for use, but active development has been put on hold indefinitely. No new features or regular updates are currently planned.
+> Las nuevas versiones se distribuyen manualmente por Discord. Esta versión tiene desactivada la búsqueda e instalación de actualizaciones automáticas.
 
 <p align="center">
-  <img src="docs/screenshots/paris.png" alt="GeoHelper showing Paris" />
+  <img src="site/public/paris.png" alt="Vista principal de GeoHelper con la ubicación de París" width="100%" />
 </p>
 
-## What is GeoHelper?
+## ¿Qué es GeoHelper?
 
-GeoHelper is a desktop companion for **GeoGuessr on Steam**. While you play, it shows live round information in a clean sidebar: coordinates, country, region, road, postcode, flag, and a map preview.
+GeoHelper es una aplicación de escritorio que muestra información de las rondas de **GeoGuessr en Steam**: coordenadas, país, región, carretera, código postal y una vista del mapa.
 
-Built for **custom maps, singleplayer, solo practice, and learning geography**.
+Está orientada a mapas personalizados, partidas individuales, práctica y aprendizaje de geografía.
 
-## Highlights
+## Características
 
-* **Live round data** — coordinates and rich location details, updated as you play
-* **Fully customizable layout** — drag & drop widgets, per-text fonts/sizes/colors, custom marker styling
-* **Map preview** — OpenStreetMap out of the box, optional Google Maps with your own API key
-* **Tiny footprint** — ~6 MB app built with Tauri
-* **Non-invasive** — no injection, no DLLs, no browser extensions; it reads Steam's own Chrome DevTools Protocol
+- **Información en tiempo real:** coordenadas y detalles de la ubicación durante la partida.
+- **Interfaz personalizable:** permite mover secciones, cambiar colores y tamaños de texto y ajustar el marcador.
+- **Mapas:** OpenStreetMap y opción de Google Maps con tu propia clave de API.
+- **Aplicación de escritorio:** construida con React, Tauri y Rust.
+- **Web con detalles azules:** botones, títulos, iconos y efectos de fondo con la misma paleta.
+- **Distribución manual:** las nuevas versiones se comparten por Discord.
 
-## How it works
+## Primeros pasos
 
-GeoHelper connects to the Chrome DevTools Protocol endpoint that Steam exposes (`--remote-debugging-port=34788 --remote-allow-origins=*`) and listens to the game's own network RPC traffic.
+1. Obtén la versión distribuida por Discord para tu sistema e instálala o abre su ejecutable, según el paquete.
+2. En Steam, haz clic derecho en **GeoGuessr → Propiedades → Opciones de lanzamiento** y añade:
 
-Everything is processed locally on your machine — nothing is sent anywhere.
-
-## Getting started
-
-1. Download the latest release from [Releases](../../releases/latest)
-
-2. In Steam, right-click **GeoGuessr** → **Properties** → **Launch Options** and add:
-
-   ```bash
+   ```text
    --remote-debugging-port=34788 --remote-allow-origins=*
    ```
 
-3. Launch GeoHelper and start playing
+3. Abre GeoGuessr y GeoHelper para comenzar.
 
-**Supported platforms:** Windows 10/11 · Linux · macOS 11+
+La conexión con el juego utiliza su interfaz local de Chrome DevTools Protocol. Los mapas y los servicios de información geográfica pueden necesitar conexión a Internet.
 
-### Linux notes
+## Hazlo tuyo
 
-The `.deb` package installs its WebKitGTK dependencies automatically.
+Pulsa el icono del lápiz para entrar en el modo de edición:
 
-On Arch-based distros such as Arch or CachyOS, use the included package recipe:
-
-```bash
-git clone https://github.com/wiktorekdev/geohelper.git
-cd geohelper/packaging/arch
-makepkg -si
-```
-
-Running the AppImage or raw binary directly? Install the runtime dependencies manually:
-
-```bash
-sudo pacman -S --needed webkit2gtk-4.1 libsoup3 gtk3 libayatana-appindicator
-```
-
-Building from source on Arch requires the full Tauri development set:
-
-```bash
-sudo pacman -S --needed webkit2gtk-4.1 base-devel curl wget file openssl appmenu-gtk-module libappindicator-gtk3 librsvg xdotool
-```
-
-## Customization
-
-Click the pencil icon in the sidebar to enter **Edit Mode**:
-
-* Drag & drop to reorder widgets
-* Style any text — 20 bundled fonts, size, bold/italic/underline, custom colors
-* Customize the map marker — fill, border, and size
-* Resize the sidebar
-* Hide the map
-* Switch between light and dark themes
+- Arrastra las secciones para cambiar su orden.
+- Personaliza el tamaño, color y estilo del texto.
+- Ajusta el marcador y el ancho de la barra lateral.
+- Oculta el mapa o las secciones que no necesites.
+- Cambia entre los temas disponibles.
 
 <p align="center">
-  <img src="docs/screenshots/edit-mode.png" alt="GeoHelper Edit Mode" />
+  <img src="site/public/edit-mode.png" alt="Vista del modo de edición y personalización de GeoHelper" width="100%" />
 </p>
 
-## Map providers
+## Compilar el programa de PC
 
-| Feature      | OpenStreetMap (default) | Google Maps (optional)   |
-| ------------ | ----------------------- | ------------------------ |
-| Availability | Built-in                | Requires API key         |
-| Pricing      | Completely free         | Google Cloud free tier   |
-| Styles       | Multiple CartoDB styles | Roadmap, Satellite, Dark |
+Necesitas Bun y Rust, además de las herramientas de desarrollo de Tauri para tu sistema. En Windows se utilizan las herramientas de C++ de Visual Studio y WebView2.
 
-## Build from source
+Desde la carpeta principal del proyecto:
 
 ```bash
-bun install
-bun run dev          # development with hot reload
-bun run build        # create release builds
-bun run test         # frontend unit tests
-bun run check        # lint, tests, and frontend build
+bun install --frozen-lockfile
+bun run dev
 ```
 
-## Project status
+Para generar un instalador de Windows:
 
-GeoHelper is currently marked as **NPU — No Planned Updates**.
+```bash
+bun run build:local --bundles nsis
+```
 
-The project is still available and may continue to work as-is, but it is not under active development. There is currently no roadmap, release schedule, or commitment to future updates.
+El instalador se genera en `src-tauri/target/release/bundle/nsis/`.
 
-Critical fixes may still happen at the maintainer's discretion, but they should not be expected.
+Para ejecutar las comprobaciones del programa:
 
-## Support
+```bash
+bun run check
+```
 
-If you enjoy GeoHelper and want to support the project:
+## Web
 
-<a href="https://ko-fi.com/wiktorekdev">
-  <img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Buy me a coffee" />
-</a>
+La web está en `site` y utiliza Next.js. Incluye el logo y las capturas actualizadas, detalles en azul y un enlace al perfil de GitHub.
 
-## Disclaimer
+Para trabajar en ella desde la carpeta principal:
 
-GeoHelper is a **personal, educational practice tool**.
+```bash
+cd site
+bun install --frozen-lockfile
+bun run dev
+```
 
-Using helpers in ranked or competitive modes may violate GeoGuessr's Terms of Service and may result in account penalties. Use responsibly.
+Para comprobarla y compilarla:
 
-## License
+```bash
+bun run lint
+bun run build
+```
 
-[MIT](LICENSE)
+En Vercel, selecciona **Next.js**, el directorio raíz **site**, el comando de instalación `bun install --frozen-lockfile` y el comando de compilación `bun run build`. Conserva el directorio de salida automático y permite el acceso al `package.json` de la carpeta superior, que proporciona la versión de la aplicación.
+
+## Perfil
+
+[Mi perfil de GitHub — Zerinho23](https://github.com/Zerinho23)
+
+## Uso
+
+GeoHelper es una herramienta de práctica personal y educativa. El uso de ayudas en modos competitivos puede incumplir las condiciones de GeoGuessr.
+
+## Licencia
+
+Este proyecto se distribuye bajo la [licencia MIT](LICENSE). Se conservan los avisos de copyright de sus colaboradores.
