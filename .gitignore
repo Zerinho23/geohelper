@@ -1,0 +1,57 @@
+# dependencies
+node_modules
+
+# build output
+dist
+dist-ssr
+dist-tsc
+.next
+out
+*.local
+*.tsbuildinfo
+
+# Rust / Tauri
+src-tauri/target
+src-tauri/gen/schemas
+src-tauri/app-icon.png
+
+# built binaries that shouldn't be committed
+/*.exe
+/*.msi
+/*.dmg
+/*.AppImage
+/*.deb
+release/
+release-zip/
+*.zip
+
+# editor / os
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# tauri signing keys - NEVER commit these
+.tauri/
+*.key
+!capabilities/*.key
+
+# runtime logs
+logs/
+*.log
+
+# scratch
+old/
+
+# playwright automation artifacts
+.playwright-mcp/
+
+# raw screenshot captures (intermediates for scripts/process-screenshots.mjs)
+/raw-*.png
+readmeold.md

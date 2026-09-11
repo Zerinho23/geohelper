@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "GeoHelper",
+  "version": "../package.json",
+  "identifier": "geohelper",
+  "build": {
+    "beforeDevCommand": "bun run vite:dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "bun run vite:build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' asset: data: blob: https://cdn.jsdelivr.net https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://maps.googleapis.com https://maps.gstatic.com https://*.basemaps.cartocdn.com; connect-src ipc: http://ipc.localhost https://api.github.com https://nominatim.openstreetmap.org https://maps.googleapis.com https://restcountries.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com; font-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "createUpdaterArtifacts": false,
+    "category": "Utility",
+    "shortDescription": "GeoGuessr Steam helper",
+    "longDescription": "Monitors GeoGuessr (Steam) via CDP and surfaces round coordinates on a map.",
+    "copyright": "",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "nsis": {
+        "installMode": "perMachine",
+        "displayLanguageSelector": false
+      }
+    }
+  },
+  "plugins": {}
+}

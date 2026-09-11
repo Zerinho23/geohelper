@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+.sticky-header-container:has(.mobile-menu-drawer) {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+  background-color: rgba(9, 9, 11, 0.85) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #d4d4d8;
+  background: #09090b;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.font-mono {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.hero-glow {
+  background: radial-gradient(ellipse 50% 50% at 50% -5%, rgba(129, 140, 248, 0.08), transparent 70%);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.logo-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+details[open] > summary svg {
+  transform: rotate(180deg);
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .logo-float {
+    animation: none;
+  }
+}
