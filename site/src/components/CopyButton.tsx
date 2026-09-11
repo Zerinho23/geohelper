@@ -1,29 +1,8 @@
 "use client";
-
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
-
-export default function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch (e) {
-      console.warn("Failed to copy text: ", e);
-    }
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={copy}
-      aria-label="Copy launch flags"
-      className="shrink-0 rounded border border-white/[0.06] p-1 text-zinc-500 transition hover:text-zinc-300"
-    >
-      {copied ? <Check className="size-3.5 text-emerald-400" /> : <Copy className="size-3.5" />}
-    </button>
-  );
+export default function CopyButton({text}:{text:string}){
+ const [status,setStatus]=useState("");
+ async function copy(){try{await navigator.clipboard.writeText(text);setStatus("Copiado");}catch{setStatus("No se pudo copiar. Selecciona el texto y cópialo manualmente.");}}
+ return <span className="inline-flex flex-col items-end gap-1"><button type="button" onClick={copy} aria-label="Copiar opciones de lanzamiento" title="Copiar opciones de lanzamiento" className="shrink-0 rounded border border-white/10 p-2 text-zinc-300 hover:text-white">{status==="Copiado"?<Check className="size-4 text-blue-400"/>:<Copy className="size-4"/>}</button><span role="status" className="max-w-40 text-xs text-zinc-400">{status}</span></span>;
 }

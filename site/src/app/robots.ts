@@ -1,15 +1,4 @@
 import type { MetadataRoute } from "next";
-
-const siteUrl = "https://geohelperapp.vercel.app";
-
+import { SITE_URL } from "../links";
 export const dynamic = "force-static";
-
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
-    sitemap: `${siteUrl}/sitemap.xml`,
-  };
-}
+export default function robots():MetadataRoute.Robots {return {rules:{userAgent:"*",allow:"/"},sitemap:SITE_URL+"/sitemap.xml"};}

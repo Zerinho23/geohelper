@@ -1,19 +1,20 @@
 {
   "name": "GeoHelper",
   "short_name": "GeoHelper",
-  "description": "Desktop helper for live GeoGuessr Steam coordinates and location data.",
+  "description": "Coordenadas y mapas para practicar GeoGuessr en Steam.",
+  "lang": "es",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
   "icons": [
     {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/logo.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Github } from "lucide-react";
 
@@ -8,15 +9,15 @@ export default function NotFoundContent() {
     <main className="min-h-dvh bg-zinc-950 text-zinc-100">
       <div className="grid min-h-dvh place-items-center px-6">
         <section className="w-full max-w-md text-center">
-          <img src="/logo.png" alt="" className="mx-auto mb-6 size-12 opacity-60" />
+          <Image src="/logo.png" width={48} height={56} alt="" className="mx-auto mb-6 h-14 w-auto" />
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-blue-400">
             404
           </p>
           <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-            Page not found
+            Página no encontrada
           </h1>
           <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-zinc-500">
-            The GeoHelper page you opened does not exist or has moved.
+            La página que buscas no existe o ha cambiado de dirección.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
@@ -24,7 +25,7 @@ export default function NotFoundContent() {
               className="inline-flex items-center gap-2 rounded-lg bg-blue-500 px-5 py-3 font-semibold text-white transition hover:bg-blue-400"
             >
               <ArrowLeft className="size-4" />
-              Back home
+              Volver al inicio
             </Link>
             <a
               href={GITHUB_URL}

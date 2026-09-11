@@ -1,16 +1,6 @@
 import type { MetadataRoute } from "next";
-
-const siteUrl = "https://geohelperapp.vercel.app";
-
+import { SITE_URL } from "../links";
 export const dynamic = "force-static";
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: `${siteUrl}/`,
-      lastModified: new Date("2026-05-23"),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-  ];
+return [{url:SITE_URL+"/",changeFrequency:"monthly",priority:1}];
 }

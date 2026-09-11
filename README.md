@@ -17,7 +17,7 @@
 > [!NOTE]
 > **Actualizaciones manuales por Discord**
 >
-> Las nuevas versiones se distribuyen manualmente por Discord. Esta versión tiene desactivada la búsqueda e instalación de actualizaciones automáticas.
+> Las nuevas versiones se distribuyen manualmente por [Discord](https://discord.gg/RBKzQvRQS7). Esta versión tiene desactivada la búsqueda e instalación de actualizaciones automáticas.
 
 <p align="center">
   <img src="site/public/paris.png" alt="Vista principal de GeoHelper con la ubicación de París" width="100%" />
@@ -109,7 +109,7 @@ bun run lint
 bun run build
 ```
 
-En Vercel, selecciona **Next.js**, el directorio raíz **site**, el comando de instalación `bun install --frozen-lockfile` y el comando de compilación `bun run build`. Conserva el directorio de salida automático y permite el acceso al `package.json` de la carpeta superior, que proporciona la versión de la aplicación.
+En Vercel, selecciona **Next.js**, el directorio raíz **site**, el comando de instalación `bun install --frozen-lockfile` y el comando de compilación `bun run build`. Conserva el directorio de salida automático. La web tiene su propia configuración y no necesita leer archivos de la carpeta superior.
 
 ## Perfil
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Menu, X, Download } from "lucide-react";
-import { EXTERNAL_LINK_PROPS, GITHUB_URL, RELEASES_LATEST_URL } from "../links";
+import { EXTERNAL_LINK_PROPS, GITHUB_URL, DISCORD_URL } from "../links";
 
 export default function NavMobileMenu() {
   const [open, setOpen] = useState(false);
@@ -13,7 +13,7 @@ export default function NavMobileMenu() {
     <>
       <button
         type="button"
-        aria-label={open ? "Close menu" : "Open menu"}
+        aria-label={open ? "Cerrar menú" : "Abrir menú"}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className="inline-flex size-9 items-center justify-center rounded-md border border-white/[0.06] text-zinc-400 transition hover:text-zinc-200 md:hidden"
@@ -29,21 +29,21 @@ export default function NavMobileMenu() {
               onClick={close}
               className="rounded-md px-3 py-2.5 text-zinc-400 transition hover:text-zinc-100"
             >
-              Features
+              Características
             </a>
             <a
               href="#customize"
               onClick={close}
               className="rounded-md px-3 py-2.5 text-zinc-400 transition hover:text-zinc-100"
             >
-              Customize
+              Personalizar
             </a>
             <a
               href="#get-started"
               onClick={close}
               className="rounded-md px-3 py-2.5 text-zinc-400 transition hover:text-zinc-100"
             >
-              Get started
+              Cómo empezar
             </a>
             <a
               href={GITHUB_URL}
@@ -54,13 +54,13 @@ export default function NavMobileMenu() {
               GitHub
             </a>
             <a
-              href={RELEASES_LATEST_URL}
+              href={DISCORD_URL}
               {...EXTERNAL_LINK_PROPS}
               onClick={close}
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-blue-500 px-4 py-2.5 font-medium text-white transition hover:bg-blue-400"
             >
               <Download className="size-4" />
-              Mi perfil
+              Discord
             </a>
           </div>
         </nav>
