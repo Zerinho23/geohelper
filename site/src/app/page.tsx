@@ -3,7 +3,6 @@ import {
   ChevronDown,
   Code2,
   Download,
-  Github,
   KeyRound,
   Layout,
   MapPin,
@@ -89,16 +88,8 @@ function Hero() {
           extension, no scripts inside the game.
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-10 flex justify-center">
           <DownloadButton />
-          <a
-            href={GITHUB_URL}
-            {...EXTERNAL_LINK_PROPS}
-            className="inline-flex items-center gap-2 rounded-lg border border-white/[0.08] px-5 py-3 text-zinc-300 transition hover:border-white/[0.15] hover:text-white"
-          >
-            <Github className="size-[18px]" />
-            Source on GitHub
-          </a>
         </div>
 
         <p className="mt-8 font-mono text-xs text-zinc-600">

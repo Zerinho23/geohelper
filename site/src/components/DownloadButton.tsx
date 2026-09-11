@@ -3,11 +3,18 @@ import { EXTERNAL_LINK_PROPS, GITHUB_URL } from "../links";
 
 export default function DownloadButton() {
   return (
-    <div className="inline-flex flex-col items-center gap-2">
-      <a href={GITHUB_URL} {...EXTERNAL_LINK_PROPS} className="inline-flex items-center gap-2 rounded-lg bg-indigo-500 px-5 py-3 font-semibold text-white transition hover:bg-indigo-400">
-        <Github className="size-[18px]" /> GitHub
+    <div className="flex w-full flex-col items-center gap-4 text-center">
+      <a
+        href={GITHUB_URL}
+        {...EXTERNAL_LINK_PROPS}
+        className="inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/15 transition hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400"
+      >
+        <Github aria-hidden="true" className="size-5 shrink-0" />
+        <span>Mi perfil de GitHub</span>
       </a>
-      <p className="text-sm text-zinc-400">Las actualizaciones se distribuyen manualmente por Discord.</p>
+      <p className="max-w-sm text-sm leading-relaxed text-zinc-500">
+        Las actualizaciones se distribuyen manualmente por Discord.
+      </p>
     </div>
   );
 }
