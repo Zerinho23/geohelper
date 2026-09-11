@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowLeft, Github } from "lucide-react";
 
 import { EXTERNAL_LINK_PROPS, GITHUB_URL } from "../links";
@@ -18,13 +19,13 @@ export default function NotFoundContent() {
             The GeoHelper page you opened does not exist or has moved.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a
+            <Link
               href="/"
               className="inline-flex items-center gap-2 rounded-lg bg-blue-500 px-5 py-3 font-semibold text-white transition hover:bg-blue-400"
             >
               <ArrowLeft className="size-4" />
               Back home
-            </a>
+            </Link>
             <a
               href={GITHUB_URL}
               {...EXTERNAL_LINK_PROPS}
