@@ -107,6 +107,57 @@
     overflow: hidden;
   }
 
+  .window-bar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 9999;
+    display: flex;
+    height: 34px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.13);
+    background: rgba(5, 13, 29, 0.94);
+    color: rgba(226, 232, 240, 0.7);
+    backdrop-filter: blur(18px);
+    user-select: none;
+  }
+  .window-bar__brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 14px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .window-bar__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #2f81ff;
+    box-shadow: 0 0 12px rgba(47, 129, 255, 0.8);
+  }
+  .window-bar__actions {
+    display: flex;
+    height: 100%;
+  }
+  .window-bar__actions button {
+    display: grid;
+    width: 46px;
+    place-items: center;
+    color: rgba(226, 232, 240, 0.62);
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+  .window-bar__actions button:hover {
+    background: rgba(96, 165, 250, 0.12);
+    color: white;
+  }
+  .window-bar__actions .window-bar__close:hover {
+    background: #dc2626;
+    color: white;
+  }
+
   .auth-grid {
     background-image:
       linear-gradient(rgba(96, 165, 250, 0.7) 1px, transparent 1px),

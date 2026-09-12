@@ -15,6 +15,7 @@ import { useTheme } from "@/hooks/use-theme"
 import { useViewportWidth } from "@/hooks/use-viewport-width"
 import { useDisplayStore } from "@/lib/display-store"
 import { useStore } from "@/lib/store"
+import { WindowBar } from "@/components/window-bar"
 
 function SidebarPanel({
   settingsOpen,
@@ -83,6 +84,7 @@ export default function App() {
       <div
         className={`flex h-screen w-screen overflow-hidden bg-background ${isBarrelRolling ? "animate-barrel-roll" : ""}`}
       >
+        <WindowBar />
         <div className="flex h-full w-full">
           <div
             className={
