@@ -217,11 +217,7 @@ export function ChangelogSidebar() {
                 variant="outline"
                 size="sm"
                 className="h-8 w-full gap-1.5 rounded-md border-sidebar-border text-[11px] text-muted-foreground transition-colors hover:bg-accent/40 hover:text-foreground"
-                onClick={() =>
-                  openUrl(
-                    "https://github.com/Zerinho23"
-                  )
-                }
+                onClick={() => openUrl("https://github.com/Zerinho23")}
               >
                 <ExternalLink className="size-3" />
                 {t("update.viewOnGithub")}

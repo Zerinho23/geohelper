@@ -33,8 +33,6 @@ export function SettingsSidebar() {
   const alwaysOnTop = useStore((s) => s.alwaysOnTop)
   const setAlwaysOnTop = useStore((s) => s.setAlwaysOnTop)
 
-
-
   const [reveal, setReveal] = useState(false)
   const { validation: keyValidation, validate: runKeyValidation } =
     useGoogleApiKeyValidation(apiKey)

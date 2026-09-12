@@ -108,7 +108,8 @@
   }
 
   .auth-grid {
-    background-image: linear-gradient(rgba(96, 165, 250, 0.7) 1px, transparent 1px),
+    background-image:
+      linear-gradient(rgba(96, 165, 250, 0.7) 1px, transparent 1px),
       linear-gradient(90deg, rgba(96, 165, 250, 0.7) 1px, transparent 1px);
     background-size: 64px 64px;
     animation: auth-grid-drift 24s linear infinite;
@@ -152,9 +153,12 @@
     position: absolute;
     inset: 17%;
     border-radius: 50%;
-    background: radial-gradient(circle at 34% 28%, rgba(96, 165, 250, 0.25), transparent 23%),
+    background:
+      radial-gradient(circle at 34% 28%, rgba(96, 165, 250, 0.25), transparent 23%),
       radial-gradient(circle, rgba(14, 116, 255, 0.13), rgba(5, 13, 29, 0.02) 65%);
-    box-shadow: inset -24px -16px 70px rgba(0, 0, 0, 0.5), 0 0 75px rgba(37, 99, 235, 0.14);
+    box-shadow:
+      inset -24px -16px 70px rgba(0, 0, 0, 0.5),
+      0 0 75px rgba(37, 99, 235, 0.14);
     animation: auth-globe-pulse 5s ease-in-out infinite;
   }
 
@@ -174,16 +178,31 @@
     border-radius: inherit;
   }
 
-  .auth-globe-ring::before { transform: scaleX(0.44); }
-  .auth-globe-ring::after { transform: scaleY(0.43); }
-  .auth-globe-ring-one { animation: auth-globe-spin 18s linear infinite; }
-  .auth-globe-ring-two { inset: 18%; border-color: rgba(56, 189, 248, 0.15); animation: auth-globe-spin-reverse 12s linear infinite; }
+  .auth-globe-ring::before {
+    transform: scaleX(0.44);
+  }
+  .auth-globe-ring::after {
+    transform: scaleY(0.43);
+  }
+  .auth-globe-ring-one {
+    animation: auth-globe-spin 18s linear infinite;
+  }
+  .auth-globe-ring-two {
+    inset: 18%;
+    border-color: rgba(56, 189, 248, 0.15);
+    animation: auth-globe-spin-reverse 12s linear infinite;
+  }
 
   .auth-globe-scan {
     position: absolute;
     inset: 11%;
     border-radius: 50%;
-    background: conic-gradient(from 0deg, transparent 0 74%, rgba(56, 189, 248, 0.34) 82%, transparent 88% 100%);
+    background: conic-gradient(
+      from 0deg,
+      transparent 0 74%,
+      rgba(56, 189, 248, 0.34) 82%,
+      transparent 88% 100%
+    );
     -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 59% 60%, transparent 61%);
     mask: radial-gradient(circle, transparent 0 58%, #000 59% 60%, transparent 61%);
     animation: auth-globe-spin 7s linear infinite;
@@ -195,36 +214,91 @@
     height: 7px;
     border-radius: 999px;
     background: #38bdf8;
-    box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.13), 0 0 22px #38bdf8;
+    box-shadow:
+      0 0 0 5px rgba(56, 189, 248, 0.13),
+      0 0 22px #38bdf8;
     animation: auth-dot-pulse 2.4s ease-in-out infinite;
   }
 
-  .auth-globe-dot-one { left: 32%; top: 38%; }
-  .auth-globe-dot-two { right: 27%; top: 27%; animation-delay: -0.8s; }
-  .auth-globe-dot-three { right: 32%; bottom: 30%; animation-delay: -1.5s; }
+  .auth-globe-dot-one {
+    left: 32%;
+    top: 38%;
+  }
+  .auth-globe-dot-two {
+    right: 27%;
+    top: 27%;
+    animation-delay: -0.8s;
+  }
+  .auth-globe-dot-three {
+    right: 32%;
+    bottom: 30%;
+    animation-delay: -1.5s;
+  }
 
-  @keyframes auth-globe-spin { to { transform: rotate(360deg); } }
-  @keyframes auth-globe-spin-reverse { to { transform: rotate(-360deg); } }
-  @keyframes auth-globe-pulse { 50% { transform: scale(1.035); opacity: 0.82; } }
-  @keyframes auth-dot-pulse { 50% { transform: scale(1.7); opacity: 0.62; } }
+  @keyframes auth-globe-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes auth-globe-spin-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  @keyframes auth-globe-pulse {
+    50% {
+      transform: scale(1.035);
+      opacity: 0.82;
+    }
+  }
+  @keyframes auth-dot-pulse {
+    50% {
+      transform: scale(1.7);
+      opacity: 0.62;
+    }
+  }
 
   @keyframes auth-grid-drift {
-    from { background-position: 0 0; }
-    to { background-position: 64px 64px; }
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 64px 64px;
+    }
   }
 
   @keyframes auth-particles-drift {
-    from { background-position: 0 0; transform: translate3d(0, 0, 0); }
-    to { background-position: 116px 116px; transform: translate3d(12px, -8px, 0); }
+    from {
+      background-position: 0 0;
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      background-position: 116px 116px;
+      transform: translate3d(12px, -8px, 0);
+    }
   }
 
   @keyframes auth-orb-float {
-    from { transform: translate3d(-2%, -1%, 0) scale(1); }
-    to { transform: translate3d(4%, 3%, 0) scale(1.08); }
+    from {
+      transform: translate3d(-2%, -1%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(4%, 3%, 0) scale(1.08);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .auth-grid, .auth-orb, .auth-particles, .auth-globe, .auth-globe-ring, .auth-globe-ring-two, .auth-globe-scan, .auth-globe-core, .auth-globe-dot { animation: none; }
+    .auth-grid,
+    .auth-orb,
+    .auth-particles,
+    .auth-globe,
+    .auth-globe-ring,
+    .auth-globe-ring-two,
+    .auth-globe-scan,
+    .auth-globe-core,
+    .auth-globe-dot {
+      animation: none;
+    }
   }
 
   button,

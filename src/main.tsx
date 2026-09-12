@@ -22,7 +22,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary>
       <TooltipProvider delayDuration={200}>
-        <LicenseGate><App /></LicenseGate>
+        <LicenseGate>
+          <App />
+        </LicenseGate>
         <Toaster />
       </TooltipProvider>
     </ErrorBoundary>

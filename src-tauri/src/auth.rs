@@ -145,7 +145,7 @@ fn hwid() -> Result<String, String> {
             .split('"')
             .find(|part| part.starts_with("S-1-"))
             .ok_or("No se pudo identificar el usuario de Windows")?;
-        return Ok(sid.to_owned());
+        Ok(sid.to_owned())
     }
     #[cfg(not(target_os = "windows"))]
     Err("Esta edición con licencia está preparada para Windows.".into())
@@ -264,12 +264,17 @@ pub async fn authenticate_account(
     let result = request(fields).await?;
     let expiry = expiry(&result)?;
     let subscription = result["info"]["subscriptions"]
-        .as_array().and_then(|items| items.first())
+        .as_array()
+        .and_then(|items| items.first())
         .and_then(|item| item["subscription"].as_str())
-        .unwrap_or("GeoHelper").to_owned();
+        .unwrap_or("GeoHelper")
+        .to_owned();
     let saved = if remember {
-        let value = serde_json::to_string(&Credentials { username: username.clone(), password })
-            .map_err(|_| "No se pudo guardar la cuenta")?;
+        let value = serde_json::to_string(&Credentials {
+            username: username.clone(),
+            password,
+        })
+        .map_err(|_| "No se pudo guardar la cuenta")?;
         credential_entry().and_then(|e| {
             e.set_password(&value)
                 .map_err(|_| "No se pudo guardar la contraseña en Windows.".into())
