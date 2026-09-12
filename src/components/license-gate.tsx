@@ -86,7 +86,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
 
   return (
     <main
-      className="relative box-border flex h-screen flex-col items-center overflow-hidden bg-[#050913] p-4 text-white lg:p-7"
+      className="relative box-border flex h-screen flex-col items-center overflow-hidden bg-[#050913] p-0 text-white"
       style={{
         backgroundImage:
           "radial-gradient(circle at 8% 18%, rgba(37,99,235,.22), transparent 28%), radial-gradient(circle at 92% 82%, rgba(14,165,233,.12), transparent 30%)",
@@ -96,11 +96,20 @@ export function LicenseGate({ children }: { children: ReactNode }) {
       <div className="auth-orb auth-orb-one pointer-events-none absolute" />
       <div className="auth-orb auth-orb-two pointer-events-none absolute" />
       <div className="auth-particles pointer-events-none absolute inset-0" />
-      <div className="relative my-auto grid min-h-[calc(100vh-3.5rem)] w-full max-w-[1220px] shrink-0 overflow-hidden rounded-[28px] border border-blue-300/15 bg-[#091323]/90 shadow-[0_35px_100px_rgba(0,0,0,.55)] backdrop-blur-xl md:grid-cols-[1.08fr_.92fr]">
-        <section className="relative flex min-h-[690px] flex-col overflow-hidden border-b border-white/10 p-9 md:border-b-0 md:border-r md:p-12 lg:p-14">
+      <div className="relative grid h-full min-h-0 w-full max-w-none shrink-0 overflow-hidden border-blue-300/15 bg-[#091323]/90 shadow-[0_35px_100px_rgba(0,0,0,.55)] backdrop-blur-xl md:grid-cols-[1.08fr_.92fr]">
+        <section className="relative flex min-h-0 flex-col overflow-hidden border-b border-white/10 p-8 md:border-b-0 md:border-r md:p-12 lg:p-14">
           <div className="absolute -right-36 top-28 size-[430px] rounded-full border border-blue-400/10" />
           <div className="absolute -right-24 top-40 size-[310px] rounded-full border border-blue-400/10" />
           <div className="absolute right-4 top-48 size-44 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="auth-globe pointer-events-none absolute right-[-12%] top-[24%] hidden size-[520px] lg:block">
+            <div className="auth-globe-ring auth-globe-ring-one" />
+            <div className="auth-globe-ring auth-globe-ring-two" />
+            <div className="auth-globe-core" />
+            <div className="auth-globe-scan" />
+            <span className="auth-globe-dot auth-globe-dot-one" />
+            <span className="auth-globe-dot auth-globe-dot-two" />
+            <span className="auth-globe-dot auth-globe-dot-three" />
+          </div>
 
           <div className="relative z-10 flex items-center gap-3">
             <img src={logo} alt="" className="h-12 w-12 object-contain" />
@@ -159,7 +168,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
           </div>
         </section>
 
-        <section className="flex min-h-[690px] flex-col p-8 md:p-10 lg:p-12">
+        <section className="flex min-h-0 flex-col p-8 md:p-10 lg:p-12">
           <div className="mb-8 flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs text-slate-400">
               <Globe2 className="size-4 text-blue-400" /> Acceso seguro
