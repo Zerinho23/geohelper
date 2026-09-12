@@ -10,7 +10,20 @@
     "frontendDist": "../dist"
   },
   "app": {
-    "windows": [],
+    "windows": [
+      {
+        "label": "main",
+        "title": "GeoHelper",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 960,
+        "minHeight": 640,
+        "resizable": true,
+        "decorations": true,
+        "fullscreen": false,
+        "shadow": true
+      }
+    ],
     "security": {
       "csp": "default-src 'self'; script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' asset: data: blob: https://cdn.jsdelivr.net https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://maps.googleapis.com https://maps.gstatic.com https://*.basemaps.cartocdn.com; connect-src ipc: http://ipc.localhost https://api.github.com https://nominatim.openstreetmap.org https://maps.googleapis.com https://restcountries.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com; font-src 'self' data:"
     }
