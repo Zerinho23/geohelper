@@ -17,7 +17,6 @@ import {
 import toast from "react-hot-toast"
 import logo from "@/assets/logo.png"
 import { DISCORD_URL, GITHUB_URL } from "@/lib/links"
-import { WindowBar } from "@/components/window-bar"
 
 export function LicenseGate({ children }: { children: ReactNode }) {
   const [active, setActive] = useState(false)
@@ -93,7 +92,6 @@ export function LicenseGate({ children }: { children: ReactNode }) {
           "radial-gradient(circle at 8% 18%, rgba(37,99,235,.22), transparent 28%), radial-gradient(circle at 92% 82%, rgba(14,165,233,.12), transparent 30%)",
       }}
     >
-      <WindowBar />
       <div className="auth-grid pointer-events-none absolute inset-0 opacity-[0.07]" />
       <div className="auth-orb auth-orb-one pointer-events-none absolute" />
       <div className="auth-orb auth-orb-two pointer-events-none absolute" />
