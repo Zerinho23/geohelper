@@ -1,15 +1,25 @@
-# Activación de GeoHelper
+# Cuentas de GeoHelper
 
-Esta edición de Windows usa la aplicación **GEOGUERS** de KeyAuth, Owner ID `7anpncFmp2`, versión de API de aplicación `1.0` y endpoint `https://keyauth.win/api/1.3/`. Estos datos identifican la aplicación; no son claves de administración.
+La aplicación usa KeyAuth **GEOGUERS**, Owner ID `7anpncFmp2`, versión de aplicación KeyAuth `1.0` y API `https://keyauth.win/api/1.3/`.
 
-En el panel de KeyAuth, selecciona GEOGUERS y crea las licencias con la suscripción y duración que necesites. Entrega cada licencia al usuario por tu canal de Discord. Si quieres limitar su uso al usuario de Windows que la activa, configura la comprobación de HWID en el panel. El cliente envía el SID del usuario de Windows, igual que los ejemplos oficiales de KeyAuth; no es una identificación física del ordenador.
+## Primer acceso
 
-Al abrir GeoHelper, el usuario introduce su licencia. La clave no se guarda en disco y se solicita de nuevo al reiniciar. No necesitas compartir Seller Key, secretos ni contraseñas. La validación se realiza en Rust y verifica la firma Ed25519 y la fecha de las respuestas antes de aceptar la sesión.
+Pulsa **Regístrate** e introduce usuario, contraseña, confirmación de contraseña y una licencia vigente. KeyAuth crea la cuenta y vincula la licencia a ese usuario. Las siguientes veces se inicia sesión únicamente con usuario y contraseña; el formulario de inicio de sesión no envía ninguna licencia.
 
-La conexión con el juego permanece detenida hasta la activación. La sesión se comprueba cada 30 segundos; si falla la conexión o KeyAuth rechaza la sesión, se detiene el acceso y se borran las coordenadas de la sesión. La caducidad de la suscripción también se comprueba localmente. Se requiere conexión a Internet.
+Si ya usaste una licencia en la edición anterior que solo pedía claves, puede estar asociada a un usuario creado por KeyAuth. Comprueba esa cuenta en el panel antes de intentar registrar la misma licencia. No se migran ni restablecen cuentas automáticamente.
 
-Para probarlo antes de distribuir: crea una licencia de prueba, abre el instalador nuevo, activa la licencia y comprueba el acceso. Después revócala desde KeyAuth y verifica que la aplicación se bloquee. Prueba también una clave incorrecta y la pérdida de conexión. No se ha incluido ninguna licencia de prueba en el código.
+## Recordarme
 
-El historial se descarga de este repositorio y las actualizaciones del instalador se distribuyen manualmente por [Discord](https://discord.gg/RBKzQvRQS7). Los enlaces visibles de GitHub apuntan al [perfil de Zerinho23](https://github.com/Zerinho23).
+La opción **Recordarme** conserva usuario y contraseña en el Administrador de credenciales de Windows, bajo `GeoHelper.GEOGUERS`. La contraseña no se guarda en los ajustes de la app ni se devuelve a la interfaz: Rust la recupera cuando pulsas Entrar. La app muestra el usuario recordado y un aviso en el campo de contraseña.
 
-Referencia del protocolo: [ejemplo oficial de KeyAuth](https://github.com/KeyAuth/KeyAuth-Python-Example/blob/main/keyauth.py). Como cualquier aplicación ejecutada en un equipo del usuario, la comprobación local no impide que alguien modifique y recompile el cliente.
+**Olvidar cuenta** elimina los datos locales guardados. Entrar con Recordarme desactivado también los elimina después de una autenticación correcta. **Cerrar sesión**, en Ajustes, termina el acceso actual y conserva los datos recordados para el próximo acceso. Cerrar la app también requiere volver a pulsar Entrar cuando la abras.
+
+## Licencias y comprobación
+
+Crea las licencias con la duración y suscripción que necesites en tu panel de KeyAuth. La licencia sigue sujeta a caducidad y revocación aunque no se vuelva a pedir en el login. La app requiere Internet y comprueba periódicamente la sesión. Si falla la validación, se detiene la conexión con el juego.
+
+El cliente verifica las firmas Ed25519 de KeyAuth y envía el SID del usuario de Windows como HWID. Configura en el panel la política de HWID que quieras aplicar. No incluyas Seller Key, secretos ni contraseñas de administración en el código.
+
+Para la prueba final, registra una cuenta con una licencia de prueba, cierra la aplicación, vuelve a entrar con los datos guardados y prueba Olvidar cuenta y Cerrar sesión. No se han creado cuentas ni consumido licencias durante las pruebas automáticas.
+
+Referencias: [protocolo oficial de KeyAuth](https://github.com/KeyAuth/KeyAuth-Python-Example/blob/main/keyauth.py), [almacenamiento de credenciales](https://docs.rs/keyring/3.6.3/keyring/).

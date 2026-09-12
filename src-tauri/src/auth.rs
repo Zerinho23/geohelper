@@ -139,35 +139,135 @@ pub fn auth_status(auth: State<'_, SharedAuth>) -> bool {
     auth.allowed()
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
+struct Credentials {
+    username: String,
+    password: String,
+}
+
+fn credential_entry() -> Result<keyring::Entry, String> {
+    if !cfg!(target_os = "windows") {
+        return Err("Recordarme requiere Windows.".into());
+    }
+    keyring::Entry::new("GeoHelper.GEOGUERS", "remembered-account")
+        .map_err(|_| "No se pudo acceder al almacén seguro de Windows.".into())
+}
+fn read_credentials() -> Result<Option<Credentials>, String> {
+    match credential_entry()?.get_password() {
+        Ok(value) => serde_json::from_str(&value)
+            .map(Some)
+            .map_err(|_| "Los datos guardados no son válidos. Usa Olvidar cuenta.".into()),
+        Err(keyring::Error::NoEntry) => Ok(None),
+        Err(_) => Err("No se pudieron leer los datos guardados en Windows.".into()),
+    }
+}
+fn remove_credentials() -> Result<(), String> {
+    match credential_entry()?.delete_credential() {
+        Ok(()) | Err(keyring::Error::NoEntry) => Ok(()),
+        Err(_) => Err("No se pudieron borrar los datos guardados.".into()),
+    }
+}
 #[tauri::command]
-pub async fn activate_license(key: String, auth: State<'_, SharedAuth>) -> Result<(), String> {
+pub async fn remembered_account(auth: State<'_, SharedAuth>) -> Result<Option<String>, String> {
+    let _guard = auth.activation.lock().await;
+    Ok(read_credentials()?.map(|c| c.username))
+}
+#[tauri::command]
+pub async fn forget_account(auth: State<'_, SharedAuth>) -> Result<(), String> {
+    let _guard = auth.activation.lock().await;
+    remove_credentials()
+}
+
+fn account_fields(
+    username: &str,
+    password: &str,
+    key: Option<&str>,
+) -> Result<Vec<(&'static str, String)>, String> {
+    if username.trim().is_empty()
+        || username.len() > 128
+        || password.is_empty()
+        || password.len() > 256
+    {
+        return Err("Introduce un usuario y una contraseña válidos.".into());
+    }
+    let mut fields = vec![
+        (
+            "type",
+            if key.is_some() { "register" } else { "login" }.into(),
+        ),
+        ("username", username.trim().into()),
+        ("pass", password.into()),
+    ];
+    if let Some(key) = key {
+        if key.trim().is_empty() || key.len() > 256 {
+            return Err("Introduce la licencia para crear tu cuenta.".into());
+        }
+        fields.push(("key", key.trim().into()));
+    }
+    Ok(fields)
+}
+
+#[tauri::command]
+pub async fn authenticate_account(
+    username: String,
+    password: String,
+    key: Option<String>,
+    remember: bool,
+    use_saved: bool,
+    auth: State<'_, SharedAuth>,
+) -> Result<Option<String>, String> {
     let _guard = auth.activation.lock().await;
     if auth.allowed() {
-        return Ok(());
+        return Ok(None);
     }
-    let key = key.trim();
-    if key.is_empty() || key.len() > 256 {
-        return Err("Introduce una clave de licencia válida.".into());
-    }
+    let username = username.trim().to_owned();
+    let password = if use_saved && key.is_none() {
+        let saved = read_credentials()?
+            .filter(|c| c.username == username)
+            .ok_or("Introduce tu contraseña.")?;
+        saved.password
+    } else {
+        password
+    };
+    let mut fields = account_fields(&username, &password, key.as_deref())?;
+    let device = hwid()?;
     let init = request(vec![("type", "init".into()), ("ver", VERSION.into())]).await?;
     let id = init["sessionid"]
         .as_str()
         .filter(|s| !s.is_empty())
         .ok_or("Sesión inválida")?
         .to_owned();
-    let result = request(vec![
-        ("type", "license".into()),
-        ("key", key.into()),
-        ("hwid", hwid()?),
-        ("sessionid", id.clone()),
-    ])
-    .await?;
+    fields.push(("hwid", device));
+    fields.push(("sessionid", id.clone()));
+    let result = request(fields).await?;
     let expiry = expiry(&result)?;
+    let saved = if remember {
+        let value = serde_json::to_string(&Credentials { username, password })
+            .map_err(|_| "No se pudo guardar la cuenta")?;
+        credential_entry().and_then(|e| {
+            e.set_password(&value)
+                .map_err(|_| "No se pudo guardar la contraseña en Windows.".into())
+        })
+    } else {
+        remove_credentials()
+    };
     *auth.session.lock() = Some(Session {
         id,
         expiry,
         checked: Instant::now(),
     });
+    Ok(saved.err())
+}
+
+#[tauri::command]
+pub async fn logout_account(app: AppHandle, auth: State<'_, SharedAuth>) -> Result<(), String> {
+    let _guard = auth.activation.lock().await;
+    let old = auth.session.lock().take();
+    let _ = app.emit("auth-logout", ());
+    if let Some(session) = old {
+        // Local access ends even if the server is unreachable.
+        let _ = request(vec![("type", "logout".into()), ("sessionid", session.id)]).await;
+    }
     Ok(())
 }
 
@@ -176,10 +276,15 @@ pub async fn supervise(app: AppHandle, state: crate::state::Shared, auth: Shared
         while !auth.allowed() {
             tokio::time::sleep(Duration::from_millis(250)).await;
         }
+        let Some(session_id) = auth.session.lock().as_ref().map(|s| s.id.clone()) else {
+            continue;
+        };
         let monitor = async {
             loop {
                 tokio::time::sleep(Duration::from_secs(1)).await;
-                if !auth.allowed() {
+                if !auth.allowed()
+                    || auth.session.lock().as_ref().map(|s| &s.id) != Some(&session_id)
+                {
                     break;
                 }
                 let session = auth.session.lock().clone();
@@ -192,24 +297,66 @@ pub async fn supervise(app: AppHandle, state: crate::state::Shared, auth: Shared
                             break;
                         }
                         if let Some(s) = auth.session.lock().as_mut() {
-                            s.checked = Instant::now();
+                            if s.id == session_id {
+                                s.checked = Instant::now();
+                            }
                         }
                     }
                 }
             }
         };
         tokio::select! { _ = crate::cdp::run(app.clone(), state.clone()) => {}, _ = monitor => {} }
-        *auth.session.lock() = None;
+        let _guard = auth.activation.lock().await;
+        let same_session = auth
+            .session
+            .lock()
+            .as_ref()
+            .is_some_and(|s| s.id == session_id);
+        if same_session {
+            *auth.session.lock() = None;
+        }
         state.clear_history();
         state.set_conn(crate::state::ConnState::Idle);
         let _ = app.emit("state", state.snapshot());
-        let _ = app.emit("auth-expired", ());
+        if same_session {
+            let _ = app.emit("auth-expired", ());
+        }
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn login_never_sends_a_license() {
+        let fields = account_fields(" player ", "password", None).unwrap();
+        assert!(fields.contains(&("type", "login".into())));
+        assert!(fields.contains(&("username", "player".into())));
+        assert!(!fields.iter().any(|(name, _)| *name == "key"));
+    }
+    #[test]
+    fn registration_requires_license_and_credentials() {
+        assert!(account_fields("player", "password", Some("")).is_err());
+        assert!(account_fields("", "password", Some("license")).is_err());
+        assert!(account_fields("player", "", Some("license")).is_err());
+        let fields = account_fields("player", "password", Some("license")).unwrap();
+        assert!(fields.contains(&("type", "register".into())));
+        assert!(fields.contains(&("key", "license".into())));
+    }
+    #[cfg(target_os = "windows")]
+    #[test]
+    fn windows_credential_roundtrip() {
+        let entry = keyring::Entry::new(
+            "GeoHelper.Tests",
+            &format!("roundtrip-{}", std::process::id()),
+        )
+        .unwrap();
+        entry.set_password("synthetic-test-password").unwrap();
+        let read = entry.get_password();
+        entry.delete_credential().unwrap();
+        assert_eq!(read.unwrap(), "synthetic-test-password");
+        assert!(matches!(entry.get_password(), Err(keyring::Error::NoEntry)));
+    }
     #[test]
     fn starts_locked() {
         assert!(!Auth::default().allowed());

@@ -55,7 +55,10 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             auth::auth_status,
-            auth::activate_license,
+            auth::authenticate_account,
+            auth::remembered_account,
+            auth::forget_account,
+            auth::logout_account,
             commands::get_state,
             commands::reset_current,
             commands::clear_history,
