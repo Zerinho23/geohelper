@@ -107,6 +107,61 @@
     overflow: hidden;
   }
 
+  .auth-grid {
+    background-image: linear-gradient(rgba(96, 165, 250, 0.7) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(96, 165, 250, 0.7) 1px, transparent 1px);
+    background-size: 64px 64px;
+    animation: auth-grid-drift 24s linear infinite;
+  }
+
+  .auth-orb {
+    width: 38rem;
+    height: 38rem;
+    border-radius: 9999px;
+    filter: blur(72px);
+    opacity: 0.14;
+    animation: auth-orb-float 16s ease-in-out infinite alternate;
+  }
+
+  .auth-orb-one {
+    left: -13rem;
+    top: -16rem;
+    background: #2563eb;
+  }
+
+  .auth-orb-two {
+    right: -14rem;
+    bottom: -18rem;
+    background: #0891b2;
+    animation-delay: -7s;
+  }
+
+  .auth-particles {
+    opacity: 0.5;
+    background-image: radial-gradient(circle, rgba(147, 197, 253, 0.7) 1px, transparent 1.5px);
+    background-size: 116px 116px;
+    animation: auth-particles-drift 28s linear infinite;
+  }
+
+  @keyframes auth-grid-drift {
+    from { background-position: 0 0; }
+    to { background-position: 64px 64px; }
+  }
+
+  @keyframes auth-particles-drift {
+    from { background-position: 0 0; transform: translate3d(0, 0, 0); }
+    to { background-position: 116px 116px; transform: translate3d(12px, -8px, 0); }
+  }
+
+  @keyframes auth-orb-float {
+    from { transform: translate3d(-2%, -1%, 0) scale(1); }
+    to { transform: translate3d(4%, 3%, 0) scale(1.08); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .auth-grid, .auth-orb, .auth-particles { animation: none; }
+  }
+
   button,
   a,
   input[type="range"],
