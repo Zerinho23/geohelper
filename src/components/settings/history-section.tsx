@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react"
-import { Clipboard, Download, Search } from "lucide-react"
+import { Clipboard, Download, Search, Trash2 } from "lucide-react"
 import toast from "react-hot-toast"
 import { Group } from "@/components/settings/settings-primitives"
 import { useStore } from "@/lib/store"
 import { formatCoords } from "@/lib/coords"
+import { ipc } from "@/lib/ipc"
 
 export function HistorySection() {
   const history = useStore((s) => s.history)
@@ -29,6 +30,7 @@ export function HistorySection() {
           {visible.length ? visible.map((round) => <button key={`${round.index}-${round.coords.timestamp}`} className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[10px] hover:bg-white/[0.05]" onClick={() => { void navigator.clipboard.writeText(formatCoords(round.coords, copyFormat)); toast.success("Coordenadas copiadas.") }}><span className="text-muted-foreground">#{round.index}</span><span className="font-mono">{round.coords.lat.toFixed(4)}, {round.coords.lng.toFixed(4)}</span><Clipboard className="size-3 text-muted-foreground" /></button>) : <p className="py-3 text-center text-[10px] text-muted-foreground">No hay resultados todavía.</p>}
         </div>
         <button onClick={exportCsv} className="flex w-full items-center justify-center gap-1.5 rounded-md border border-white/[0.08] py-1.5 text-xs text-muted-foreground hover:text-foreground"><Download className="size-3.5" /> Exportar CSV</button>
+        <button disabled={!history.length} onClick={() => { void ipc.clearHistory().then(() => toast.success("Historial limpiado.")).catch(() => toast.error("No se pudo limpiar el historial.")) }} className="flex w-full items-center justify-center gap-1.5 py-1 text-[10px] text-muted-foreground hover:text-red-300 disabled:opacity-40"><Trash2 className="size-3" /> Limpiar historial</button>
       </div>
     </Group>
   )

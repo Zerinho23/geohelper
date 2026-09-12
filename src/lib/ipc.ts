@@ -6,4 +6,5 @@ export const ipc = {
   setAlwaysOnTop: (on: boolean) => invoke<void>("set_always_on_top", { on }),
   isInstalled: () => invoke<boolean>("is_installed"),
   reconnect: () => invoke<void>("reconnect"),
+  clearHistory: () => invoke<void>("clear_history"),
 }
