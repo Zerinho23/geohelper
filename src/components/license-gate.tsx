@@ -99,7 +99,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
       <div className="auth-orb auth-orb-two pointer-events-none absolute" />
       <div className="auth-particles pointer-events-none absolute inset-0" />
       <div className="relative grid h-full min-h-0 w-full max-w-none shrink-0 overflow-hidden border-blue-300/15 bg-[#091323]/90 shadow-[0_35px_100px_rgba(0,0,0,.55)] backdrop-blur-xl md:grid-cols-[1.08fr_.92fr]">
-        <section className="relative flex min-h-0 flex-col overflow-hidden border-b border-white/10 p-8 md:border-b-0 md:border-r md:p-12 lg:p-14">
+        <section className="auth-left relative flex min-h-0 flex-col overflow-hidden border-b border-white/10 p-8 md:border-b-0 md:border-r md:p-12 lg:p-14">
           <div className="absolute -right-36 top-28 size-[430px] rounded-full border border-blue-400/10" />
           <div className="absolute -right-24 top-40 size-[310px] rounded-full border border-blue-400/10" />
           <div className="absolute right-4 top-48 size-44 rounded-full bg-blue-500/10 blur-3xl" />
@@ -139,7 +139,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
               {benefits.map(({ icon: Icon, title, text }) => (
                 <div
                   key={title}
-                  className="rounded-2xl border border-white/[0.07] bg-white/[0.035] p-4 transition hover:border-blue-400/20 hover:bg-blue-500/[0.06]"
+                  className="auth-feature rounded-2xl border border-white/[0.07] bg-white/[0.035] p-4 transition hover:border-blue-400/20 hover:bg-blue-500/[0.06]"
                 >
                   <div className="mb-3 flex size-9 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400">
                     <Icon className="size-[18px]" />
@@ -170,7 +170,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
           </div>
         </section>
 
-        <section className="flex min-h-0 flex-col p-8 md:p-10 lg:p-12">
+        <section className="auth-right relative flex min-h-0 flex-col p-8 md:p-10 lg:p-12">
           <div className="mb-8 flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs text-slate-400">
               <Globe2 className="size-4 text-blue-400" /> Acceso seguro
@@ -180,7 +180,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
             </div>
           </div>
 
-          <div className="my-auto w-full max-w-md self-center py-4">
+          <div className="auth-form-panel my-auto w-full max-w-md self-center rounded-[28px] border border-white/[0.08] bg-white/[0.035] p-6 py-7 shadow-2xl shadow-black/20 backdrop-blur-md md:p-8">
             <div className="mb-6 flex size-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-blue-500/10 shadow-lg shadow-blue-500/5">
               <ShieldCheck className="size-6 text-blue-400" />
             </div>
