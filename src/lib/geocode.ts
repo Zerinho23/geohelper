@@ -1,5 +1,6 @@
 import type { PlaceInfo } from "@/types"
 import { useStore } from "./store"
+import { useI18n } from "./i18n"
 import { runGeocode, type GeocodeProviderId } from "./geocode-providers"
 
 type ReverseGeocodeResult = {
@@ -20,6 +21,7 @@ export async function reverseGeocode(
   const provider: GeocodeProviderId =
     geocodeProvider === "google" && !googleApiKey.trim() ? "nominatim" : geocodeProvider
   const key = [
+    useI18n.getState().locale,
     provider,
     provider === "google" ? googleApiKey.trim() : "",
     lat.toFixed(3),

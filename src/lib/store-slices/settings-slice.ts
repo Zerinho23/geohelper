@@ -9,10 +9,10 @@ import { normalizeHexColor } from "@/lib/utils"
 
 export type CopyFormat = "lat,lng" | "lat, lng" | "lng,lat"
 
-const DEFAULT_MAP_PROVIDER: MapProviderId = "osm"
+const DEFAULT_MAP_PROVIDER: MapProviderId = "carto-dark"
 const DEFAULT_GEOCODE_PROVIDER: GeocodeProviderId = "nominatim"
 const DEFAULT_COPY_FORMAT: CopyFormat = "lat, lng"
-const DEFAULT_MARKER_COLOR = "#818cf8"
+const DEFAULT_MARKER_COLOR = "#2f81ff"
 const DEFAULT_MARKER_BORDER = "#ffffff"
 const DEFAULT_MARKER_SIZE = 24
 const MARKER_MIN_SIZE = 8
@@ -119,6 +119,16 @@ export const createSettingsSlice: StateCreator<Store, [], [], SettingsSlice> = (
       let mapProvider = (await store.get<MapProviderId>("mapProvider")) ?? DEFAULT_MAP_PROVIDER
       if (!MAP_PROVIDERS[mapProvider]) {
         mapProvider = DEFAULT_MAP_PROVIDER
+      }
+      // Upgrade the old default once; subsequent map choices are preserved.
+      if (!(await store.get<boolean>("mapAppearanceV2"))) {
+        if (mapProvider === "osm") mapProvider = DEFAULT_MAP_PROVIDER
+        await store.set("mapProvider", mapProvider)
+        if ((await store.get<string>("markerColor")) === "#818cf8") {
+          await store.set("markerColor", DEFAULT_MARKER_COLOR)
+        }
+        await store.set("mapAppearanceV2", true)
+        await store.save()
       }
       const geocodeProvider =
         (await store.get<GeocodeProviderId>("geocodeProvider")) ?? DEFAULT_GEOCODE_PROVIDER

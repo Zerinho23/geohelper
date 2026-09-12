@@ -6,16 +6,22 @@ import { deriveLocationDisplay } from "@/lib/location-display"
 import { useStore } from "@/lib/store"
 import { SelectableText } from "@/components/display/selectable-text"
 import { normalizeTextSize, useDisplayStore } from "@/lib/display-store"
-import { useT } from "@/lib/i18n"
+import { useT, useI18n } from "@/lib/i18n"
 
 export function LocationSection() {
   const t = useT()
+  const locale = useI18n((s) => s.locale)
   const place = useStore((s) => s.place)
   const details = useStore((s) => s.countryDetails)
   const geocodeError = useStore((s) => s.geocodeError)
   const current = useStore((s) => s.current)
   const locationLoading = useStore((s) => s.locationLoading)
   const display = deriveLocationDisplay(place, details, current, geocodeError, locationLoading)
+  if (display.kind === "settlement" && /^[a-z]{2}$/i.test(display.countryCode ?? "")) {
+    display.country =
+      new Intl.DisplayNames([locale], { type: "region" }).of(display.countryCode!.toUpperCase()) ??
+      display.country
+  }
 
   function renderContent() {
     switch (display.kind) {

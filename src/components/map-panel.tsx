@@ -6,12 +6,15 @@ import { MAP_PROVIDERS } from "@/lib/map-providers"
 import { useStore } from "@/lib/store"
 import { useDisplayStore } from "@/lib/display-store"
 import { GoogleMapView } from "./google-map-view"
+import { useI18n } from "@/lib/i18n"
 
 export function MapPanel() {
   const current = useStore((s) => s.current)
   const providerId = useStore((s) => s.mapProvider)
   const apiKey = useStore((s) => s.googleApiKey)
-  const provider = MAP_PROVIDERS[providerId] || MAP_PROVIDERS["osm"]
+  const setMapProvider = useStore((s) => s.setMapProvider)
+  const spanish = useI18n((s) => s.locale === "es")
+  const provider = MAP_PROVIDERS[providerId] || MAP_PROVIDERS["carto-dark"]
 
   const markerColor = useStore((s) => s.markerColor)
   const markerBorderColor = useStore((s) => s.markerBorderColor)
@@ -37,6 +40,23 @@ export function MapPanel() {
 
   return (
     <div className="relative flex-1 min-h-0">
+      <div className="absolute right-4 top-4 z-[1000] rounded-xl border border-blue-400/20 bg-slate-950/85 p-2 shadow-xl backdrop-blur-md">
+        <label className="flex items-center gap-3 text-xs text-slate-200">
+          {spanish ? "Estilo del mapa" : "Map style"}
+          <select
+            aria-label={spanish ? "Estilo del mapa" : "Map style"}
+            value={providerId}
+            onChange={(event) => setMapProvider(event.target.value as keyof typeof MAP_PROVIDERS)}
+            className="rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-white"
+          >
+            {Object.entries(MAP_PROVIDERS).map(([id, item]) => (
+              <option key={id} value={id} disabled={item.kind === "google" && !apiKey.trim()}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       {provider.kind === "google" ? (
         <GoogleMapView
           apiKey={apiKey}
@@ -58,6 +78,7 @@ export function MapPanel() {
           maxBoundsViscosity={1.0}
         >
           <TileLayer
+            key={providerId}
             url={provider.url}
             attribution={provider.attribution}
             maxZoom={provider.maxZoom}

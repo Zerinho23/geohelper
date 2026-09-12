@@ -7,7 +7,7 @@ import { ipc } from "@/lib/ipc"
 import { createLocationEnrichmentSession } from "@/lib/location-enrichment"
 import { useStore } from "@/lib/store"
 import type { Coords, Snapshot } from "@/types"
-import { t } from "@/lib/i18n"
+import { t, useI18n } from "@/lib/i18n"
 
 export function useBridge() {
   const setSnapshot = useStore((s) => s.setSnapshot)
@@ -17,12 +17,19 @@ export function useBridge() {
     let mounted = true
     const unsubs: Array<() => void> = []
     const enrichment = createLocationEnrichmentSession(() => mounted)
+    unsubs.push(
+      useI18n.subscribe((next, previous) => {
+        const current = useStore.getState().current
+        if (current && next.locale !== previous.locale) enrichment.start(current, true)
+      })
+    )
 
     if (!isTauri()) {
       setConn({ kind: "disconnected", reason: t("bridge.waiting") })
       return () => {
         mounted = false
         enrichment.cancel()
+        unsubs.forEach((unsubscribe) => unsubscribe())
       }
     }
 

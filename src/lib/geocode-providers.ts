@@ -2,7 +2,7 @@ import type { PlaceInfo } from "@/types"
 import { continentFrom } from "./continents"
 import { errorMessage } from "./errors"
 import { timeoutSignal } from "./fetch-timeout"
-import { t } from "@/lib/i18n"
+import { t, useI18n } from "@/lib/i18n"
 import { VERSION } from "./links"
 
 export type GeocodeProviderId = "nominatim" | "google"
@@ -71,7 +71,8 @@ async function nominatim(
   fallbackContinent?: string,
   signal?: AbortSignal
 ): Promise<PlaceInfo> {
-  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=14&accept-language=en&addressdetails=1`
+  const language = useI18n.getState().locale
+  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=14&accept-language=${language}&addressdetails=1`
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",
@@ -106,7 +107,8 @@ async function google(
   fallbackContinent?: string,
   signal?: AbortSignal
 ): Promise<PlaceInfo> {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${encodeURIComponent(apiKey)}&language=en`
+  const language = useI18n.getState().locale
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${encodeURIComponent(apiKey)}&language=${language}`
   const res = await fetch(url, { signal: timeoutSignal(undefined, signal) })
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
   const data = await res.json()

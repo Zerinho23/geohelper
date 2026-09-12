@@ -11,7 +11,7 @@ type EnrichmentRun = {
 }
 
 export type LocationEnrichmentSession = {
-  start: (coords: Coords) => void
+  start: (coords: Coords, refresh?: boolean) => void
   cancel: () => void
 }
 
@@ -60,15 +60,16 @@ export function createLocationEnrichmentSession(
   }
 
   return {
-    start: (coords) => {
+    start: (coords, refresh = false) => {
       if (!isActive()) return
       const previous = useStore.getState().current
-      if (previous && latLngClose(previous.lat, previous.lng, coords.lat, coords.lng)) return
+      if (!refresh && previous && latLngClose(previous.lat, previous.lng, coords.lat, coords.lng))
+        return
 
       abort?.abort()
       abort = new AbortController()
       const run = { id: ++runId, coords, signal: abort.signal }
-      useStore.getState().pushCoords(coords)
+      if (!refresh) useStore.getState().pushCoords(coords)
       void enrich(run)
     },
     cancel: () => {

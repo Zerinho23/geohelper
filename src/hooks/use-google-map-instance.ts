@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { loadGoogleMaps } from "@/lib/google-maps-loader"
 import { useStore } from "@/lib/store"
+import { useI18n } from "@/lib/i18n"
 
 const DEFAULT_CENTER = { lat: 20, lng: 0 }
 const DEFAULT_ZOOM = 2
@@ -33,6 +34,7 @@ export function useGoogleMapInstance(
   center: MapCenter
 ) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const locale = useI18n((s) => s.locale)
   const mapRef = useRef<google.maps.Map | null>(null)
   const markerRef = useRef<google.maps.Marker | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -77,7 +79,7 @@ export function useGoogleMapInstance(
     return () => {
       cancelled = true
     }
-  }, [apiKey, mapTypeId, styles])
+  }, [apiKey, mapTypeId, styles, locale])
 
   useEffect(() => {
     if (mapRef.current) {
