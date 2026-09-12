@@ -29,29 +29,13 @@ pub fn run() {
                 auth::supervise(handle, shared, auth).await;
             });
 
-            let mut builder = tauri::webview::WebviewWindowBuilder::new(
-                app,
-                "main",
-                tauri::WebviewUrl::App("index.html".into()),
-            )
-            .title("GeoHelper")
-            .inner_size(1280.0, 820.0)
-            .min_inner_size(960.0, 640.0)
-            .resizable(true)
-            .decorations(true)
-            .fullscreen(false)
-            .shadow(true);
-
-            if util::is_portable() {
-                if let Ok(exe_path) = std::env::current_exe() {
-                    if let Some(exe_dir) = exe_path.parent() {
-                        let webview_dir = exe_dir.join("data").join("webview");
-                        builder = builder.data_directory(webview_dir);
-                    }
-                }
-            }
-
-            let _window = builder.build()?;
+            // The main window is created from tauri.conf.json. Configure it here
+            // without creating a second window with the same label.
+            let window = app
+                .get_webview_window("main")
+                .ok_or_else(|| std::io::Error::other("main window was not created"))?;
+            window.set_decorations(true)?;
+            window.set_resizable(true)?;
 
             Ok(())
         })
