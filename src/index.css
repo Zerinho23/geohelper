@@ -215,6 +215,56 @@
       inset 0 1px rgba(255, 255, 255, 0.05),
       0 24px 60px rgba(0, 0, 0, 0.18);
   }
+  .auth-shell {
+    margin: 26px;
+    height: calc(100% - 52px);
+    border: 1px solid rgba(96, 165, 250, 0.18);
+    border-radius: 30px;
+    background: linear-gradient(
+      125deg,
+      rgba(9, 25, 48, 0.98),
+      rgba(7, 15, 31, 0.96) 52%,
+      rgba(12, 26, 50, 0.98)
+    );
+    box-shadow:
+      0 30px 90px rgba(0, 0, 0, 0.5),
+      inset 0 1px rgba(255, 255, 255, 0.06);
+  }
+  .auth-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      rgba(37, 99, 235, 0.12),
+      transparent 34%,
+      transparent 70%,
+      rgba(14, 165, 233, 0.08)
+    );
+  }
+  .auth-title {
+    text-shadow: 0 0 32px rgba(47, 129, 255, 0.2);
+  }
+  .auth-left {
+    background: linear-gradient(135deg, rgba(17, 43, 78, 0.32), transparent 48%);
+  }
+  .auth-right {
+    background: linear-gradient(180deg, rgba(2, 8, 20, 0.16), rgba(20, 49, 86, 0.18));
+  }
+  .auth-right::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12%;
+    bottom: 12%;
+    width: 1px;
+    background: linear-gradient(transparent, rgba(96, 165, 250, 0.36), transparent);
+  }
+  .auth-form-panel {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: linear-gradient(145deg, rgba(30, 50, 82, 0.48), rgba(10, 22, 42, 0.72));
+  }
   @keyframes auth-glow-breathe {
     0%,
     100% {

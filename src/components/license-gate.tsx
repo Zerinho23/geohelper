@@ -98,7 +98,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
       <div className="auth-orb auth-orb-one pointer-events-none absolute" />
       <div className="auth-orb auth-orb-two pointer-events-none absolute" />
       <div className="auth-particles pointer-events-none absolute inset-0" />
-      <div className="relative grid h-full min-h-0 w-full max-w-none shrink-0 overflow-hidden border-blue-300/15 bg-[#091323]/90 shadow-[0_35px_100px_rgba(0,0,0,.55)] backdrop-blur-xl md:grid-cols-[1.08fr_.92fr]">
+      <div className="auth-shell relative grid h-full min-h-0 w-full max-w-none shrink-0 overflow-hidden border-blue-300/15 bg-[#091323]/90 shadow-[0_35px_100px_rgba(0,0,0,.55)] backdrop-blur-xl md:grid-cols-[1.08fr_.92fr]">
         <section className="auth-left relative flex min-h-0 flex-col overflow-hidden border-b border-white/10 p-8 md:border-b-0 md:border-r md:p-12 lg:p-14">
           <div className="absolute -right-36 top-28 size-[430px] rounded-full border border-blue-400/10" />
           <div className="absolute -right-24 top-40 size-[310px] rounded-full border border-blue-400/10" />
@@ -127,7 +127,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-3 py-1.5 text-[11px] font-medium text-blue-300">
               <Sparkles className="size-3.5" /> EXPLORA. APRENDE. MEJORA.
             </div>
-            <h1 className="max-w-xl text-4xl font-semibold leading-[1.1] tracking-tight lg:text-5xl">
+            <h1 className="auth-title max-w-xl text-4xl font-semibold leading-[1.1] tracking-tight lg:text-5xl">
               Bienvenido a <span className="text-blue-400">GeoHelper</span>
             </h1>
             <p className="mt-5 max-w-lg text-[15px] leading-7 text-slate-400">
