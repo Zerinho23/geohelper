@@ -2,7 +2,18 @@ import { useEffect, useState, type ReactNode } from "react"
 import { invoke } from "@tauri-apps/api/core"
 import { listen } from "@tauri-apps/api/event"
 import { openUrl } from "@tauri-apps/plugin-opener"
-import { ArrowRight, Eye, EyeOff, Globe2, ShieldCheck } from "lucide-react"
+import {
+  ArrowRight,
+  Check,
+  Eye,
+  EyeOff,
+  Globe2,
+  LockKeyhole,
+  MapPinned,
+  Radar,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react"
 import toast from "react-hot-toast"
 import logo from "@/assets/logo.png"
 import { DISCORD_URL, GITHUB_URL } from "@/lib/links"
@@ -67,52 +78,107 @@ export function LicenseGate({ children }: { children: ReactNode }) {
   if (active) return children
   const inputClass =
     "mt-2 w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3 text-sm text-white outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 disabled:opacity-50"
+  const benefits = [
+    { icon: MapPinned, title: "Ubicación precisa", text: "Coordenadas y datos en tiempo real" },
+    { icon: Radar, title: "Conexión directa", text: "Diseñado para GeoGuessr en Steam" },
+    { icon: LockKeyhole, title: "Acceso protegido", text: "Tu cuenta vinculada a KeyAuth" },
+  ]
+
   return (
     <main
-      className="flex h-screen flex-col items-center overflow-y-auto bg-[#060a12] p-6 text-white"
+      className="relative flex h-screen flex-col items-center overflow-y-auto bg-[#050913] p-4 text-white lg:p-7"
       style={{
-        backgroundImage: "radial-gradient(ellipse at 15% 40%, #102c50 0%, transparent 55%)",
+        backgroundImage:
+          "radial-gradient(circle at 8% 18%, rgba(37,99,235,.22), transparent 28%), radial-gradient(circle at 92% 82%, rgba(14,165,233,.12), transparent 30%)",
       }}
     >
-      <div className="my-auto grid w-full max-w-5xl shrink-0 overflow-hidden rounded-3xl border border-white/10 bg-[#0a1120]/80 shadow-2xl backdrop-blur-md md:grid-cols-2">
-        <section className="relative flex flex-col justify-center border-b border-white/10 p-9 md:border-b-0 md:border-r md:p-12">
-          <img src={logo} alt="" className="mb-7 h-24 w-24 object-contain" />
-          <p className="mb-3 text-xs font-semibold tracking-[0.25em] text-blue-400">
-            EXPLORA. APRENDE. MEJORA.
-          </p>
-          <h1 className="text-4xl font-semibold leading-tight tracking-tight">
-            Bienvenido a<br />
-            <span className="text-blue-400">GeoHelper</span>
-          </h1>
-          <p className="mt-5 max-w-sm text-sm leading-7 text-slate-400">
-            Tu próximo descubrimiento empieza aquí. Accede a tu cuenta y continúa explorando el
-            mundo.
-          </p>
-          <div className="mt-9 flex items-center gap-3 text-sm text-slate-300">
-            <Globe2 className="size-5 text-blue-400" /> El mundo, una ubicación a la vez.
+      <div className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(rgba(96,165,250,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(96,165,250,.7)_1px,transparent_1px)] [background-size:64px_64px]" />
+      <div className="relative my-auto grid min-h-[calc(100vh-3.5rem)] w-full max-w-[1220px] shrink-0 overflow-hidden rounded-[28px] border border-blue-300/15 bg-[#091323]/90 shadow-[0_35px_100px_rgba(0,0,0,.55)] backdrop-blur-xl md:grid-cols-[1.08fr_.92fr]">
+        <section className="relative flex min-h-[690px] flex-col overflow-hidden border-b border-white/10 p-9 md:border-b-0 md:border-r md:p-12 lg:p-14">
+          <div className="absolute -right-36 top-28 size-[430px] rounded-full border border-blue-400/10" />
+          <div className="absolute -right-24 top-40 size-[310px] rounded-full border border-blue-400/10" />
+          <div className="absolute right-4 top-48 size-44 rounded-full bg-blue-500/10 blur-3xl" />
+
+          <div className="relative z-10 flex items-center gap-3">
+            <img src={logo} alt="" className="h-12 w-12 object-contain" />
+            <div>
+              <p className="text-lg font-semibold tracking-tight">GeoHelper</p>
+              <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-blue-400">
+                Desktop Companion
+              </p>
+            </div>
           </div>
-          <div className="mt-10 flex gap-5 text-xs text-slate-400">
-            <button onClick={() => void openUrl(DISCORD_URL)} className="hover:text-blue-300">
-              Comunidad en Discord
-            </button>
-            <button onClick={() => void openUrl(GITHUB_URL)} className="hover:text-blue-300">
-              Mi GitHub
-            </button>
+
+          <div className="relative z-10 my-auto py-10">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-3 py-1.5 text-[11px] font-medium text-blue-300">
+              <Sparkles className="size-3.5" /> EXPLORA. APRENDE. MEJORA.
+            </div>
+            <h1 className="max-w-xl text-4xl font-semibold leading-[1.1] tracking-tight lg:text-5xl">
+              Bienvenido a <span className="text-blue-400">GeoHelper</span>
+            </h1>
+            <p className="mt-5 max-w-lg text-[15px] leading-7 text-slate-400">
+              Convierte cada partida en una experiencia más clara. Consulta ubicaciones, datos del
+              país y coordenadas desde una sola aplicación.
+            </p>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {benefits.map(({ icon: Icon, title, text }) => (
+                <div
+                  key={title}
+                  className="rounded-2xl border border-white/[0.07] bg-white/[0.035] p-4 transition hover:border-blue-400/20 hover:bg-blue-500/[0.06]"
+                >
+                  <div className="mb-3 flex size-9 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400">
+                    <Icon className="size-[18px]" />
+                  </div>
+                  <p className="text-xs font-semibold text-slate-200">{title}</p>
+                  <p className="mt-1.5 text-[11px] leading-4 text-slate-500">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-5 border-t border-white/[0.07] pt-6">
+            <div className="flex items-center gap-2 text-xs text-slate-400">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
+              </span>
+              Servicios disponibles
+            </div>
+            <div className="flex gap-5 text-xs text-slate-400">
+              <button onClick={() => void openUrl(DISCORD_URL)} className="hover:text-blue-300">
+                Discord
+              </button>
+              <button onClick={() => void openUrl(GITHUB_URL)} className="hover:text-blue-300">
+                GitHub
+              </button>
+            </div>
           </div>
         </section>
-        <section className="p-9 md:p-12">
-          <div className="mb-7 flex size-11 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-500/10">
-            <ShieldCheck className="size-6 text-blue-400" />
+
+        <section className="flex min-h-[690px] flex-col p-8 md:p-10 lg:p-12">
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs text-slate-400">
+              <Globe2 className="size-4 text-blue-400" /> Acceso seguro
+            </div>
+            <div className="rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-1 text-[10px] font-medium text-emerald-300">
+              <span className="mr-1.5">●</span> KEYAUTH PROTEGIDO
+            </div>
           </div>
-          <h2 className="text-2xl font-semibold">
-            {register ? "Crea tu cuenta" : "Iniciar sesión"}
-          </h2>
-          <p className="mt-2 text-sm text-slate-400">
-            {register
-              ? "Vincula tu licencia una sola vez para empezar."
-              : "Qué bueno verte de nuevo."}
-          </p>
-          <form
+
+          <div className="my-auto w-full max-w-md self-center py-4">
+            <div className="mb-6 flex size-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-blue-500/10 shadow-lg shadow-blue-500/5">
+              <ShieldCheck className="size-6 text-blue-400" />
+            </div>
+            <h2 className="text-3xl font-semibold tracking-tight">
+              {register ? "Crea tu cuenta" : "Iniciar sesión"}
+            </h2>
+            <p className="mt-2 text-sm text-slate-400">
+              {register
+                ? "Vincula tu licencia una sola vez para empezar."
+                : `Qué bueno verte de nuevo${savedUser ? `, ${savedUser}` : ""}.`}
+            </p>
+            <form
             className="mt-7 space-y-4"
             onSubmit={async (event) => {
               event.preventDefault()
@@ -296,6 +362,12 @@ export function LicenseGate({ children }: { children: ReactNode }) {
               Visita nuestro Discord
             </button>
           </p>
+          </div>
+
+          <div className="mt-7 flex items-center justify-center gap-2 border-t border-white/[0.07] pt-5 text-[11px] text-slate-500">
+            <Check className="size-3.5 text-emerald-400" /> Tus credenciales se protegen con
+            Windows
+          </div>
         </section>
       </div>
     </main>
