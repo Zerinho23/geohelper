@@ -15,6 +15,8 @@ const PUBLIC_KEY: &str = "5586b4bc69c7a4b487e4563a4cd96afd39140f919bd31cea7d1c6a
 #[derive(Clone)]
 struct Session {
     id: String,
+    username: String,
+    subscription: String,
     expiry: u64,
     checked: Instant,
 }
@@ -24,6 +26,13 @@ pub struct Auth {
     activation: tokio::sync::Mutex<()>,
 }
 pub type SharedAuth = Arc<Auth>;
+
+#[derive(Clone, serde::Serialize)]
+pub struct AuthProfile {
+    pub username: String,
+    pub subscription: String,
+    pub expiry: u64,
+}
 
 fn now() -> u64 {
     SystemTime::now()
@@ -37,6 +46,14 @@ impl Auth {
             .lock()
             .as_ref()
             .is_some_and(|s| s.expiry > now() && s.checked.elapsed() < Duration::from_secs(60))
+    }
+
+    pub fn profile(&self) -> Option<AuthProfile> {
+        self.session.lock().as_ref().map(|s| AuthProfile {
+            username: s.username.clone(),
+            subscription: s.subscription.clone(),
+            expiry: s.expiry,
+        })
     }
 }
 
@@ -137,6 +154,11 @@ fn hwid() -> Result<String, String> {
 #[tauri::command]
 pub fn auth_status(auth: State<'_, SharedAuth>) -> bool {
     auth.allowed()
+}
+
+#[tauri::command]
+pub fn auth_profile(auth: State<'_, SharedAuth>) -> Option<AuthProfile> {
+    auth.profile()
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -241,8 +263,12 @@ pub async fn authenticate_account(
     fields.push(("sessionid", id.clone()));
     let result = request(fields).await?;
     let expiry = expiry(&result)?;
+    let subscription = result["info"]["subscriptions"]
+        .as_array().and_then(|items| items.first())
+        .and_then(|item| item["subscription"].as_str())
+        .unwrap_or("GeoHelper").to_owned();
     let saved = if remember {
-        let value = serde_json::to_string(&Credentials { username, password })
+        let value = serde_json::to_string(&Credentials { username: username.clone(), password })
             .map_err(|_| "No se pudo guardar la cuenta")?;
         credential_entry().and_then(|e| {
             e.set_password(&value)
@@ -253,6 +279,8 @@ pub async fn authenticate_account(
     };
     *auth.session.lock() = Some(Session {
         id,
+        username,
+        subscription,
         expiry,
         checked: Instant::now(),
     });
@@ -366,12 +394,16 @@ mod tests {
         let auth = Auth::default();
         *auth.session.lock() = Some(Session {
             id: "test".into(),
+            username: "test".into(),
+            subscription: "test".into(),
             expiry: now() - 1,
             checked: Instant::now(),
         });
         assert!(!auth.allowed());
         *auth.session.lock() = Some(Session {
             id: "test".into(),
+            username: "test".into(),
+            subscription: "test".into(),
             expiry: now() + 1000,
             checked: Instant::now() - Duration::from_secs(61),
         });

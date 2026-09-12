@@ -4,6 +4,8 @@ import { ArrowLeft } from "lucide-react"
 import { openUrl } from "@tauri-apps/plugin-opener"
 
 import { AboutSection } from "@/components/settings/about-section"
+import { AccountSection } from "@/components/settings/account-section"
+import { HistorySection } from "@/components/settings/history-section"
 import { AppearanceSection } from "@/components/settings/appearance-section"
 import { Divider, SocialIcon } from "@/components/settings/settings-primitives"
 import { SourcesSection } from "@/components/settings/sources-section"
@@ -61,6 +63,10 @@ export function SettingsSidebar() {
       </header>
 
       <ScrollArea className="flex-1">
+        <AccountSection />
+        <Divider />
+        <HistorySection />
+        <Divider />
         <SourcesSection
           mapProvider={mapProvider}
           geocodeProvider={geocodeProvider}

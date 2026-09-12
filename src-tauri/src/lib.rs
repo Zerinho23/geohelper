@@ -56,6 +56,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             auth::auth_status,
             auth::authenticate_account,
+            auth::auth_profile,
             auth::remembered_account,
             auth::forget_account,
             auth::logout_account,
