@@ -219,7 +219,7 @@ export function ChangelogSidebar() {
                 className="h-8 w-full gap-1.5 rounded-md border-sidebar-border text-[11px] text-muted-foreground transition-colors hover:bg-accent/40 hover:text-foreground"
                 onClick={() =>
                   openUrl(
-                    `https://github.com/wiktorekdev/geohelper/releases/tag/v${selectedVersion.version}`
+                    "https://github.com/Zerinho23"
                   )
                 }
               >

@@ -1,3 +1,4 @@
+import { MessageCircle } from "lucide-react"
 import { useState } from "react"
 import { ArrowLeft } from "lucide-react"
 import { openUrl } from "@tauri-apps/plugin-opener"
@@ -6,11 +7,11 @@ import { AboutSection } from "@/components/settings/about-section"
 import { AppearanceSection } from "@/components/settings/appearance-section"
 import { Divider, SocialIcon } from "@/components/settings/settings-primitives"
 import { SourcesSection } from "@/components/settings/sources-section"
-import { GithubIcon, KofiIcon } from "@/components/brand-icons"
+import { GithubIcon } from "@/components/brand-icons"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useGoogleApiKeyValidation } from "@/hooks/use-google-api-key-validation"
-import { GITHUB_URL, KOFI_URL } from "@/lib/links"
+import { GITHUB_URL, DISCORD_URL } from "@/lib/links"
 import { useDisplayStore } from "@/lib/display-store"
 import { useStore } from "@/lib/store"
 import { useT } from "@/lib/i18n"
@@ -83,8 +84,8 @@ export function SettingsSidebar() {
         <SocialIcon title="GitHub" onClick={() => openUrl(GITHUB_URL)}>
           <GithubIcon className="size-4" />
         </SocialIcon>
-        <SocialIcon title="Ko-fi" onClick={() => openUrl(KOFI_URL)}>
-          <KofiIcon className="size-4" />
+        <SocialIcon title="Discord" onClick={() => openUrl(DISCORD_URL)}>
+          <MessageCircle className="size-4" />
         </SocialIcon>
       </footer>
     </aside>

@@ -3,27 +3,54 @@ use tauri::{AppHandle, Emitter, State, WebviewWindow};
 use crate::state::{Shared, Snapshot};
 
 #[tauri::command]
-pub fn get_state(state: State<'_, Shared>) -> Snapshot {
-    state.snapshot()
+pub fn get_state(
+    state: State<'_, Shared>,
+    auth: State<'_, crate::auth::SharedAuth>,
+) -> Result<Snapshot, String> {
+    if !auth.allowed() {
+        return Err("Activa tu licencia para continuar.".into());
+    }
+    Ok(state.snapshot())
 }
 
 #[tauri::command]
-pub fn reset_current(app: AppHandle, state: State<'_, Shared>) -> Result<(), String> {
+pub fn reset_current(
+    app: AppHandle,
+    state: State<'_, Shared>,
+    auth: State<'_, crate::auth::SharedAuth>,
+) -> Result<(), String> {
+    if !auth.allowed() {
+        return Err("Activa tu licencia para continuar.".into());
+    }
     state.reset();
     app.emit("state", &state.snapshot())
         .map_err(|e| format!("Failed to emit reset state: {e}"))
 }
 
 #[tauri::command]
-pub fn clear_history(app: AppHandle, state: State<'_, Shared>) -> Result<(), String> {
+pub fn clear_history(
+    app: AppHandle,
+    state: State<'_, Shared>,
+    auth: State<'_, crate::auth::SharedAuth>,
+) -> Result<(), String> {
+    if !auth.allowed() {
+        return Err("Activa tu licencia para continuar.".into());
+    }
     state.clear_history();
     app.emit("state", &state.snapshot())
         .map_err(|e| format!("Failed to emit cleared history: {e}"))
 }
 
 #[tauri::command]
-pub fn reconnect(state: State<'_, Shared>) {
+pub fn reconnect(
+    state: State<'_, Shared>,
+    auth: State<'_, crate::auth::SharedAuth>,
+) -> Result<(), String> {
+    if !auth.allowed() {
+        return Err("Activa tu licencia para continuar.".into());
+    }
     state.reconnect();
+    Ok(())
 }
 
 #[tauri::command]
@@ -157,7 +184,7 @@ pub async fn sync_and_read_changelog(app: AppHandle) -> Result<String, String> {
 
     // Try fetching from GitHub with a client setup
     let client = reqwest::Client::new();
-    let url = "https://raw.githubusercontent.com/wiktorekdev/geohelper/main/CHANGELOG.md";
+    let url = "https://raw.githubusercontent.com/Zerinho23/geohelper/main/CHANGELOG.md";
 
     match client.get(url).send().await {
         Ok(res) => {

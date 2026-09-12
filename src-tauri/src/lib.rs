@@ -1,3 +1,4 @@
+mod auth;
 mod cdp;
 mod commands;
 mod geo;
@@ -19,10 +20,12 @@ pub fn run() {
         .setup(|app| {
             let shared = state::State::new();
             app.manage(shared.clone());
+            let auth = std::sync::Arc::new(auth::Auth::default());
+            app.manage(auth.clone());
 
             let handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
-                cdp::run(handle, shared).await;
+                auth::supervise(handle, shared, auth).await;
             });
 
             let mut builder = tauri::webview::WebviewWindowBuilder::new(
@@ -51,6 +54,8 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            auth::auth_status,
+            auth::activate_license,
             commands::get_state,
             commands::reset_current,
             commands::clear_history,

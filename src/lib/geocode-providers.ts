@@ -75,7 +75,7 @@ async function nominatim(
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",
-      "User-Agent": `GeoHelper/${VERSION} (github.com/wiktorekdev/geohelper)`,
+      "User-Agent": `GeoHelper/${VERSION} (github.com/Zerinho23/geohelper)`,
     },
     signal: timeoutSignal(undefined, signal),
   })

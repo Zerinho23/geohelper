@@ -1,7 +1,8 @@
+import { MessageCircle } from "lucide-react"
 import { openUrl } from "@tauri-apps/plugin-opener"
 
-import { GithubIcon, KofiIcon } from "@/components/brand-icons"
-import { GITHUB_URL, KOFI_URL } from "@/lib/links"
+import { GithubIcon } from "@/components/brand-icons"
+import { GITHUB_URL, DISCORD_URL } from "@/lib/links"
 
 export function SocialFooter() {
   return (
@@ -9,8 +10,8 @@ export function SocialFooter() {
       <IconLink href={GITHUB_URL} title="GitHub">
         <GithubIcon className="size-4" />
       </IconLink>
-      <IconLink href={KOFI_URL} title="Ko-fi">
-        <KofiIcon className="size-4" />
+      <IconLink href={DISCORD_URL} title="Discord">
+        <MessageCircle className="size-4" />
       </IconLink>
     </div>
   )

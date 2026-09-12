@@ -32,6 +32,14 @@ const RETRY_MIN: Duration = Duration::from_secs(1);
 const RETRY_MAX: Duration = Duration::from_secs(30);
 const MAX_CONCURRENT_RESOLVES: usize = 4;
 
+// Dropping a licensed connection must also stop its detached socket tasks.
+struct AbortOnDrop(tokio::task::AbortHandle);
+impl Drop for AbortOnDrop {
+    fn drop(&mut self) {
+        self.0.abort();
+    }
+}
+
 pub async fn run(app: AppHandle, state: Shared) {
     let mut retry_delay = RETRY_MIN;
 
@@ -129,6 +137,7 @@ async fn attempt(app: &AppHandle, state: &Shared, reconnect_epoch: u64) -> Resul
         let _ = close_tx.send(()).await;
     });
 
+    let _reader_guard = AbortOnDrop(reader.abort_handle());
     let (heartbeat_failed_tx, mut heartbeat_failed_rx) = mpsc::channel::<()>(1);
     let conn_ping = conn.clone();
     let heartbeater = tokio::spawn(async move {
@@ -150,6 +159,7 @@ async fn attempt(app: &AppHandle, state: &Shared, reconnect_epoch: u64) -> Resul
         }
     });
 
+    let _heartbeat_guard = AbortOnDrop(heartbeater.abort_handle());
     state.set_conn(ConnState::Connected);
     emit_status(app, state);
     log_line(app, "success", "CDP connected");
@@ -157,11 +167,13 @@ async fn attempt(app: &AppHandle, state: &Shared, reconnect_epoch: u64) -> Resul
     conn.call("Network.enable", json!({})).await?;
     let prewarm_conn = conn.clone();
     let prewarm_app = app.clone();
-    tokio::spawn(async move {
+    let prewarm = tokio::spawn(async move {
         if resolution::prewarm_google_maps(prewarm_conn).await {
             log_line(&prewarm_app, "info", "Google Maps resolver prewarmed");
         }
     });
+
+    let _prewarm_guard = AbortOnDrop(prewarm.abort_handle());
 
     let result = tokio::select! {
         res = controller(app.clone(), state.clone(), reconnect_epoch, conn.clone(), evt_rx) => {
