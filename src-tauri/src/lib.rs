@@ -3,6 +3,7 @@ mod cdp;
 mod commands;
 mod geo;
 mod state;
+mod streamer;
 mod util;
 
 use tauri::Manager;
@@ -36,10 +37,13 @@ pub fn run() {
                 .ok_or_else(|| std::io::Error::other("main window was not created"))?;
             window.set_decorations(true)?;
             window.set_resizable(true)?;
+            streamer::restore(&window)?;
 
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            streamer::streamer_status,
+            streamer::set_streamer_mode,
             auth::auth_status,
             auth::authenticate_account,
             auth::auth_profile,

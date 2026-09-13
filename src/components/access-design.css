@@ -1,0 +1,251 @@
+.access-page {
+  overflow-y: auto;
+  display: block;
+  background: #080f1c;
+}
+.access-page .auth-shell {
+  margin: 0;
+  min-height: 100%;
+  height: auto;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  grid-template-columns: 1.1fr 1fr;
+}
+.access-page .auth-left {
+  padding: 30px 38px;
+  background: radial-gradient(ellipse at 10% 0%, #164d72 0%, #0d2540 40%, #091726 80%);
+}
+.access-page .auth-left > .absolute {
+  display: none;
+}
+.access-page .auth-left > .my-auto {
+  padding: 30px 0 24px;
+}
+.access-page .auth-title {
+  font-size: clamp(38px, 4.5vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+}
+.access-page .auth-title span {
+  color: #76e3ec;
+}
+.access-page .auth-title + p {
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 420px;
+  margin-top: 16px;
+}
+.atlas-visual {
+  position: relative;
+  margin-top: 22px;
+  border: 1px solid #67c7ff33;
+  border-radius: 18px;
+  background: linear-gradient(140deg, #183b5799, #06132199);
+  box-shadow:
+    0 18px 40px #0003,
+    inset 0 1px #ffffff14;
+  overflow: hidden;
+}
+.atlas-map {
+  display: block;
+  width: 100%;
+  max-height: 210px;
+  filter: drop-shadow(0 0 12px #38bdf833);
+}
+.atlas-route {
+  animation: atlas-travel 12s linear infinite;
+}
+.atlas-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  border-top: 1px solid #ffffff12;
+  color: #9fcedd;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+}
+@keyframes atlas-travel {
+  to {
+    stroke-dashoffset: -140;
+  }
+}
+.access-page .auth-feature {
+  padding: 12px;
+  border-radius: 12px;
+  background: #0b1d2a99;
+}
+.access-page .auth-feature > div {
+  margin-bottom: 8px;
+  height: 28px;
+  width: 28px;
+  color: #78e4e8;
+}
+.access-page .auth-feature p:last-child {
+  color: #93a9bf;
+}
+.access-page .auth-left .mt-8 {
+  margin-top: 16px;
+}
+.access-page .auth-right {
+  padding: 26px 32px;
+  background: radial-gradient(ellipse at 100% 100%, #172744, #0b1323 70%);
+}
+.access-page .access-toolbar {
+  margin-bottom: 22px;
+  gap: 12px;
+}
+.access-page .auth-form-panel {
+  padding: 24px;
+  margin: auto 0;
+  background: linear-gradient(145deg, #21324a, #111e31);
+  border: 1px solid #8bb8dc30;
+  border-top: 2px solid #78d9ec80;
+  border-radius: 20px;
+  box-shadow:
+    0 20px 60px #0005,
+    inset 0 1px #ffffff15;
+}
+.access-page .auth-form-panel > div:first-child {
+  margin-bottom: 16px;
+}
+.access-page .auth-form-panel h2 {
+  font-size: 28px;
+}
+.access-page .auth-form-panel form {
+  margin-top: 22px;
+}
+.access-page .auth-form-panel input:not([type="checkbox"]) {
+  background: #08132277;
+  border-color: #a0c2df30;
+}
+.access-page .auth-form-panel form > button {
+  background: linear-gradient(100deg, #197edb, #3a55e9);
+  box-shadow: 0 8px 25px #164faa40;
+}
+.access-page .auth-right > div:last-child {
+  margin-top: 18px;
+  padding-top: 14px;
+}
+.saved-account-note {
+  display: flex;
+  gap: 8px;
+  color: #83e0c3;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.saved-account-note svg {
+  flex-shrink: 0;
+}
+.stream-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #51c6bd66;
+  background: #123239;
+  color: #a3f4df;
+  border-radius: 9px;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.stream-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: #030913d9;
+  backdrop-filter: blur(18px);
+  color: #eaf2ff;
+  overflow-y: auto;
+}
+.stream-card {
+  position: relative;
+  max-width: 460px;
+  width: 100%;
+  padding: 30px;
+  border: 1px solid #8abcf044;
+  border-radius: 22px;
+  background: #102036;
+  box-shadow: 0 30px 90px #0008;
+}
+.stream-card h2,
+.privacy-screen h2 {
+  font-size: 26px;
+  margin: 16px 0;
+}
+.stream-card p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #a3b7cc;
+  margin: 16px 0;
+}
+.stream-card label {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 0;
+  font-size: 14px;
+}
+.stream-close {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  cursor: pointer;
+}
+.privacy-screen {
+  flex-direction: column;
+  background: #091323;
+  gap: 16px;
+}
+@media (max-width: 800px) {
+  .access-page .auth-shell {
+    grid-template-columns: 1fr;
+  }
+  .access-page .auth-left {
+    padding: 24px;
+  }
+  .access-page .auth-right {
+    padding: 24px;
+  }
+  .access-page .auth-left > .my-auto {
+    padding: 20px 0;
+  }
+  .access-page .atlas-visual {
+    display: none;
+  }
+}
+@media (max-height: 750px) and (min-width: 801px) {
+  .access-page .auth-left {
+    padding: 24px;
+  }
+  .access-page .auth-right {
+    padding: 20px 24px;
+  }
+  .access-page .auth-left > .my-auto {
+    padding: 22px 0;
+  }
+  .access-page .auth-title {
+    font-size: 42px;
+  }
+  .atlas-map {
+    max-height: 135px;
+  }
+  .access-page .auth-form-panel {
+    padding: 20px;
+  }
+  .access-page .auth-form-panel > div:first-child {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-route {
+    animation: none;
+  }
+}

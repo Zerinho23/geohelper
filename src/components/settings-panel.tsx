@@ -1,3 +1,4 @@
+import { StreamerMode } from "@/components/streamer-mode"
 import { MessageCircle } from "lucide-react"
 import { useState } from "react"
 import { ArrowLeft } from "lucide-react"
@@ -61,6 +62,9 @@ export function SettingsSidebar() {
       </header>
 
       <ScrollArea className="flex-1">
+        <div className="p-4">
+          <StreamerMode />
+        </div>
         <AccountSection />
         <Divider />
         <HistorySection />

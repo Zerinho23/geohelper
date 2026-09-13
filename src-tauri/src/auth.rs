@@ -277,7 +277,11 @@ pub async fn authenticate_account(
         .map_err(|_| "No se pudo guardar la cuenta")?;
         credential_entry().and_then(|e| {
             e.set_password(&value)
-                .map_err(|_| "No se pudo guardar la contraseña en Windows.".into())
+                .map_err(|_| "No se pudo guardar la contraseña en Windows.".to_owned())?;
+            match e.get_password() {
+                Ok(stored) if stored == value => Ok(()),
+                _ => Err("Windows no confirmó el guardado. Podrás entrar, pero tendrás que volver a escribir la contraseña.".into()),
+            }
         })
     } else {
         remove_credentials()

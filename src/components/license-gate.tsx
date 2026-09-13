@@ -1,3 +1,6 @@
+import { StreamerMode } from "@/components/streamer-mode"
+import { AtlasVisual } from "@/components/atlas-visual"
+import "./access-design.css"
 import { useEffect, useState, type ReactNode } from "react"
 import { invoke } from "@tauri-apps/api/core"
 import { listen } from "@tauri-apps/api/event"
@@ -31,7 +34,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
   const [savedUser, setSavedUser] = useState<string | null>(null)
   const [reveal, setReveal] = useState(false)
   const [error, setError] = useState("")
-  const useSaved = !register && savedUser === username && !password
+  const useSaved = !register && savedUser === username.trim() && !password
 
   useEffect(() => {
     let disposed = false
@@ -86,7 +89,7 @@ export function LicenseGate({ children }: { children: ReactNode }) {
 
   return (
     <main
-      className="relative box-border flex h-screen flex-col items-center overflow-hidden bg-[#050913] p-0 text-white"
+      className="access-page relative box-border flex h-screen flex-col items-center overflow-hidden bg-[#050913] p-0 text-white"
       style={{
         backgroundImage:
           "radial-gradient(circle at 8% 18%, rgba(37,99,235,.22), transparent 28%), radial-gradient(circle at 92% 82%, rgba(14,165,233,.12), transparent 30%)",
@@ -101,22 +104,13 @@ export function LicenseGate({ children }: { children: ReactNode }) {
           <div className="absolute -right-36 top-28 size-[430px] rounded-full border border-blue-400/10" />
           <div className="absolute -right-24 top-40 size-[310px] rounded-full border border-blue-400/10" />
           <div className="absolute right-4 top-48 size-44 rounded-full bg-blue-500/10 blur-3xl" />
-          <div className="auth-globe pointer-events-none absolute right-[-12%] top-[24%] hidden size-[520px] lg:block">
-            <div className="auth-globe-ring auth-globe-ring-one" />
-            <div className="auth-globe-ring auth-globe-ring-two" />
-            <div className="auth-globe-core" />
-            <div className="auth-globe-scan" />
-            <span className="auth-globe-dot auth-globe-dot-one" />
-            <span className="auth-globe-dot auth-globe-dot-two" />
-            <span className="auth-globe-dot auth-globe-dot-three" />
-          </div>
 
           <div className="relative z-10 flex items-center gap-3">
             <img src={logo} alt="" className="h-12 w-12 object-contain" />
             <div>
               <p className="text-lg font-semibold tracking-tight">GeoHelper</p>
               <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-blue-400">
-                Desktop Companion
+                TU ATLAS PERSONAL
               </p>
             </div>
           </div>
@@ -126,13 +120,15 @@ export function LicenseGate({ children }: { children: ReactNode }) {
               <Sparkles className="size-3.5" /> EXPLORA. APRENDE. MEJORA.
             </div>
             <h1 className="auth-title max-w-xl text-4xl font-semibold leading-[1.1] tracking-tight lg:text-5xl">
-              Bienvenido a <span className="text-blue-400">GeoHelper</span>
+              El mundo, <br />
+              <span className="text-blue-400">más cerca.</span>
             </h1>
             <p className="mt-5 max-w-lg text-[15px] leading-7 text-slate-400">
               Convierte cada partida en una experiencia más clara. Consulta ubicaciones, datos del
               país y coordenadas desde una sola aplicación.
             </p>
 
+            <AtlasVisual />
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {benefits.map(({ icon: Icon, title, text }) => (
                 <div
@@ -169,13 +165,11 @@ export function LicenseGate({ children }: { children: ReactNode }) {
         </section>
 
         <section className="auth-right relative flex min-h-0 flex-col p-8 md:p-10 lg:p-12">
-          <div className="mb-8 flex items-center justify-between">
+          <div className="access-toolbar mb-8 flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs text-slate-400">
               <Globe2 className="size-4 text-blue-400" /> Acceso seguro
             </div>
-            <div className="rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-1 text-[10px] font-medium text-emerald-300">
-              <span className="mr-1.5">●</span> KEYAUTH PROTEGIDO
-            </div>
+            <StreamerMode />
           </div>
 
           <div className="auth-form-panel my-auto w-full max-w-md self-center rounded-[28px] border border-white/[0.08] bg-white/[0.035] p-6 py-7 shadow-2xl shadow-black/20 backdrop-blur-md md:p-8">
@@ -250,10 +244,11 @@ export function LicenseGate({ children }: { children: ReactNode }) {
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={busy || checking}
                   className={`${inputClass} !mt-0 pr-12`}
-                  placeholder={useSaved ? "Contraseña guardada en Windows" : "Tu contraseña"}
+                  placeholder={useSaved ? "••••••••••" : "Tu contraseña"}
                 />
                 <button
                   type="button"
+                  disabled={useSaved}
                   aria-label={reveal ? "Ocultar contraseña" : "Mostrar contraseña"}
                   onClick={() => setReveal(!reveal)}
                   className="absolute right-4 top-3.5 text-slate-400"
@@ -261,6 +256,12 @@ export function LicenseGate({ children }: { children: ReactNode }) {
                   {reveal ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               </div>
+              {useSaved && (
+                <p className="saved-account-note">
+                  <Check className="size-4" /> Contraseña guardada. Pulsa Entrar sin escribirla de
+                  nuevo.
+                </p>
+              )}
               {register && (
                 <>
                   <label className="block text-sm text-slate-300" htmlFor="confirm">
