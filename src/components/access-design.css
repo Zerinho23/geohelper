@@ -1,7 +1,54 @@
 .access-page {
+  color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: #39516c #0b1525;
   overflow-y: auto;
   display: block;
   background: #080f1c;
+}
+.access-page::-webkit-scrollbar {
+  width: 6px;
+}
+.access-page::-webkit-scrollbar-track {
+  background: #0b1525;
+}
+.access-page::-webkit-scrollbar-thumb {
+  background: #39516c;
+  border-radius: 8px;
+}
+.access-page::-webkit-scrollbar-thumb:hover {
+  background: #54789a;
+}
+.access-page::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.stream-switch:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.stream-switch-track {
+  width: 28px;
+  height: 16px;
+  border-radius: 12px;
+  padding: 2px;
+  background: #42556b;
+  transition: background 0.2s;
+}
+.stream-switch-track > span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: #eaf2ff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.stream-switch[aria-checked="true"] .stream-switch-track {
+  background: #109b79;
+}
+.stream-switch[aria-checked="true"] .stream-switch-track > span {
+  transform: translateX(12px);
 }
 .access-page .auth-shell {
   margin: 0;
