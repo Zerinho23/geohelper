@@ -95,10 +95,12 @@ export function LicenseGate({ children }: { children: ReactNode }) {
           "radial-gradient(circle at 8% 18%, rgba(37,99,235,.22), transparent 28%), radial-gradient(circle at 92% 82%, rgba(14,165,233,.12), transparent 30%)",
       }}
     >
-      <div className="auth-grid pointer-events-none absolute inset-0 opacity-[0.07]" />
-      <div className="auth-orb auth-orb-one pointer-events-none absolute" />
-      <div className="auth-orb auth-orb-two pointer-events-none absolute" />
-      <div className="auth-particles pointer-events-none absolute inset-0" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="auth-grid absolute inset-0 opacity-[0.07]" />
+        <div className="auth-orb auth-orb-one absolute" />
+        <div className="auth-orb auth-orb-two absolute" />
+        <div className="auth-particles absolute inset-0" />
+      </div>
       <div className="auth-shell relative grid h-full min-h-0 w-full max-w-none shrink-0 overflow-hidden border-blue-300/15 bg-[#091323]/90 shadow-[0_35px_100px_rgba(0,0,0,.55)] backdrop-blur-xl md:grid-cols-[1.08fr_.92fr]">
         <section className="auth-left relative flex min-h-0 flex-col overflow-hidden border-b border-white/10 p-8 md:border-b-0 md:border-r md:p-12 lg:p-14">
           <div className="absolute -right-36 top-28 size-[430px] rounded-full border border-blue-400/10" />
